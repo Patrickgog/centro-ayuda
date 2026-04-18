@@ -1,0 +1,4742 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Documento Markdown</title>
+    <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:true},options:{renderActions:{addMenu:[]}},startup:{typeset:false}};</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Mono:wght@400;500&family=Merriweather:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; font-family: 'Inter', sans-serif; }
+        .tabs-container { max-width: 100%; margin: 0 auto; display: flex; overflow-x: auto; border-bottom: 2px solid #e5e7eb; background: #ffffff; padding: 0.5rem 1rem; gap: 0.5rem; }
+        .tabs-container::-webkit-scrollbar { height: 6px; }
+        .tabs-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+        .tabs-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .tab-btn { padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #64748b; background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-family: 'Inter', sans-serif; }
+        .tab-btn:hover { color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
+        .active-tab { color: #3b82f6 !important; border-bottom-color: #3b82f6 !important; background: rgba(59, 130, 246, 0.05) !important; font-weight: 600; }
+        .tab-content.hidden { display: none; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .copy-btn { position: sticky; top: 1rem; right: 1rem; float: right; margin: 1rem; padding: 0.375rem 0.875rem; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 10; }
+        .copy-btn:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
+        .copy-btn.copied { background: #10b981; }
+        .content-body { clear: both; }
+        
+        .theme-executive { font-family: 'Source Sans Pro', sans-serif; background: linear-gradient(to bottom, #faf8f5 0%, #f5f1eb 100%); color: #3d3d3d; padding: 3rem; line-height: 1.8; }
+        .theme-executive h1 { color: #2c2416; font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 3px solid #d4c5b0; padding-bottom: 0.75rem; }
+        .theme-executive h2 { color: #4a4133; font-size: 1.75rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; }
+        .theme-executive h3 { color: #5a5246; font-size: 1.35rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .theme-executive p { margin-bottom: 1.25rem; color: #4d4d4d; }
+        .theme-executive code { background: #ede7dd; color: #6b4423; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Fira Mono', monospace; font-size: 0.9em; }
+        .theme-executive pre { background: #f7f3ed; border-left: 4px solid #c4a778; padding: 1.5rem; border-radius: 6px; overflow-x: auto; margin: 1.5rem 0; }
+        .theme-executive pre code { background: transparent; padding: 0; }
+        .theme-executive blockquote { border-left: 4px solid #d4c5b0; padding-left: 1.5rem; margin: 1.5rem 0; font-style: italic; color: #5a5246; }
+        .theme-executive ul, .theme-executive ol { margin: 1rem 0 1.5rem 1.5rem; }
+        .theme-executive li { margin-bottom: 0.5rem; }
+        .theme-executive a { color: #8b6f47; text-decoration: underline; }
+        .theme-executive table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .theme-executive th { background: #f7f3ed; color: #2c2416; font-weight: 600; padding: 0.75rem 1rem; text-align: left; border-bottom: 2px solid #d4c5b0; }
+        .theme-executive td { padding: 0.75rem 1rem; border-bottom: 1px solid #ede7dd; color: #4d4d4d; }
+        .theme-executive tr:hover { background: #faf8f5; }
+        
+        .theme-technical { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%); color: #334155; padding: 3rem; line-height: 1.8; }
+        .theme-technical h1 { color: #0f172a; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 3px solid #3b82f6; padding-bottom: 0.75rem; }
+        .theme-technical h2 { color: #1e293b; font-size: 1.875rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; padding-left: 1rem; border-left: 4px solid #60a5fa; }
+        .theme-technical h3 { color: #334155; font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .theme-technical p { margin-bottom: 1.25rem; color: #475569; }
+        .theme-technical code { background: #e0f2fe; color: #0c4a6e; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Fira Mono', monospace; font-size: 0.9em; border: 1px solid #bae6fd; }
+        .theme-technical pre { background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #3b82f6; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .theme-technical pre code { background: transparent; padding: 0; border: none; }
+        .theme-technical blockquote { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
+        .theme-technical ul, .theme-technical ol { margin: 1rem 0 1.5rem 1.5rem; }
+        .theme-technical li { margin-bottom: 0.5rem; }
+        .theme-technical a { color: #2563eb; border-bottom: 2px solid #93c5fd; text-decoration: none; }
+        .theme-technical table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .theme-technical th { background: #eff6ff; color: #0f172a; font-weight: 600; padding: 0.875rem 1rem; text-align: left; border-bottom: 2px solid #3b82f6; }
+        .theme-technical td { padding: 0.875rem 1rem; border-bottom: 1px solid #e2e8f0; color: #475569; }
+        .theme-technical tr:hover { background: #f8fafc; }
+        
+        .theme-academic { font-family: 'Merriweather', serif; background: linear-gradient(to bottom, #f9fafb 0%, #f3f4f6 100%); color: #1f2937; padding: 3rem; line-height: 2; }
+        .theme-academic h1 { color: #064e3b; font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; border-bottom: 2px solid #a7f3d0; padding-bottom: 1rem; }
+        .theme-academic h2 { color: #065f46; font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem; }
+        .theme-academic h3 { color: #047857; font-size: 1.35rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; font-style: italic; }
+        .theme-academic p { margin-bottom: 1.5rem; color: #374151; text-align: justify; }
+        .theme-academic code { background: #d1fae5; color: #065f46; padding: 0.2rem 0.5rem; border-radius: 3px; font-family: 'Fira Mono', monospace; font-size: 0.85em; }
+        .theme-academic pre { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1.5rem; border-radius: 6px; overflow-x: auto; margin: 2rem 0; }
+        .theme-academic pre code { background: transparent; padding: 0; }
+        .theme-academic blockquote { border-left: 5px solid #34d399; padding-left: 2rem; margin: 2rem 0; font-style: italic; color: #065f46; background: #ecfdf5; padding: 1rem 1rem 1rem 2rem; border-radius: 4px; }
+        .theme-academic ul, .theme-academic ol { margin: 1.5rem 0 1.5rem 2rem; }
+        .theme-academic li { margin-bottom: 0.75rem; }
+        .theme-academic a { color: #059669; border-bottom: 1px dotted #34d399; text-decoration: none; }
+        .theme-academic table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: #ffffff; border: 2px solid #a7f3d0; }
+        .theme-academic th { background: #ecfdf5; color: #064e3b; font-weight: 700; padding: 0.875rem 1rem; text-align: left; border-bottom: 2px solid #34d399; }
+        .theme-academic td { padding: 0.875rem 1rem; border-bottom: 1px solid #d1fae5; color: #374151; }
+        .theme-academic tr:nth-child(even) { background: #f9fafb; }
+        .theme-academic tr:hover { background: #ecfdf5; }
+        
+        .theme-modern-slate { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%); color: #1e293b; padding: 3rem; line-height: 1.75; }
+        .theme-modern-slate h1 { color: #0f172a; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
+        .theme-modern-slate h2 { color: #1e293b; font-size: 1.875rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+        .theme-modern-slate h3 { color: #334155; font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .theme-modern-slate p { margin-bottom: 1.25rem; color: #475569; }
+        .theme-modern-slate code { background: #f1f5f9; color: #475569; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Fira Mono', monospace; font-size: 0.9em; border: 1px solid #e2e8f0; }
+        .theme-modern-slate pre { background: #0f172a; color: #e2e8f0; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .theme-modern-slate pre code { background: transparent; padding: 0; border: none; color: #e2e8f0; }
+        .theme-modern-slate blockquote { background: #f8fafc; border-left: 4px solid #64748b; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 4px; color: #475569; }
+        .theme-modern-slate ul, .theme-modern-slate ol { margin: 1rem 0 1.5rem 1.5rem; }
+        .theme-modern-slate li { margin-bottom: 0.5rem; }
+        .theme-modern-slate a { color: #0f172a; font-weight: 500; text-decoration: underline; }
+        .theme-modern-slate table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; }
+        .theme-modern-slate th { background: #f8fafc; color: #0f172a; font-weight: 600; padding: 0.875rem 1rem; text-align: left; border-bottom: 2px solid #cbd5e1; }
+        .theme-modern-slate td { padding: 0.875rem 1rem; border-bottom: 1px solid #f1f5f9; color: #475569; }
+        .theme-modern-slate tr:hover { background: #f8fafc; }
+        
+        mjx-container { display: flex !important; justify-content: center !important; margin: 2rem 0 !important; }
+    </style>
+</head>
+<body>
+    <header style="position: sticky; top: 0; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 50;">
+        <div class="tabs-container"><button onclick="showTab(0)" id="tab-0" class="tab-btn">01_Introduccion_Flujo_de_Trabajo.md</button><button onclick="showTab(1)" id="tab-1" class="tab-btn">02_Exportacion_AutoCAD_Civil3D.md</button><button onclick="showTab(2)" id="tab-2" class="tab-btn">03_Calculos_Hidraulicos_Excel.md</button><button onclick="showTab(3)" id="tab-3" class="tab-btn">04_Dibujo_AutoCAD.md</button><button onclick="showTab(4)" id="tab-4" class="tab-btn">05_Accesorios_Elementos_Especiales.md</button><button onclick="showTab(5)" id="tab-5" class="tab-btn">06_Catalogo_Macros_Funciones.md</button><button onclick="showTab(6)" id="tab-6" class="tab-btn">Manual_de_Usuario_Completo.md</button></div>
+    </header>
+    <main style="max-width: 80rem; margin: 0 auto;">
+                <div id="content-0" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(0)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Manual de Usuario - Sistema de Conducciones de Agua</h1>
+<h2>Índice General</h2>
+<ol>
+<li><a href="#1-introducci%C3%B3n-y-flujo-de-trabajo">Introducción y Flujo de Trabajo</a></li>
+<li><a href="#2-exportaci%C3%B3n-desde-autocad-civil-3d">Exportación desde AutoCAD Civil 3D</a></li>
+<li><a href="#3-c%C3%A1lculos-hidr%C3%A1ulicos-en-excel">Cálculos Hidráulicos en Excel</a></li>
+<li><a href="#4-dibujo-en-autocad">Dibujo en AutoCAD</a></li>
+<li><a href="#5-accesorios-y-elementos-especiales">Accesorios y Elementos Especiales</a></li>
+<li><a href="#6-configuraci%C3%B3n-y-par%C3%A1metros">Configuración y Parámetros</a></li>
+</ol>
+<hr>
+<h2>1. Introducción y Flujo de Trabajo</h2>
+<h3>1.1 Objetivo del Sistema</h3>
+<p>Este sistema automatiza el diseño de conducciones de agua potable, permitiendo:</p>
+<ul>
+<li><strong>Extraer</strong> datos topográficos de perfiles desde AutoCAD Civil 3D</li>
+<li><strong>Calcular</strong> hidráulicamente la conducción en Excel</li>
+<li><strong>Dibujar</strong> automáticamente el perfil longitudinal en AutoCAD</li>
+</ul>
+<h3>1.2 Flujo de Trabajo Completo</h3>
+<pre><code>┌─────────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│  AutoCAD Civil 3D  │────▶│      Excel       │────▶│    AutoCAD      │
+│                     │     │                  │     │                 │
+│ 1. Dibujar eje y    │     │ 2. Calcular      │     │ 3. Dibujar      │
+│    perfil vertical  │     │    hidráulico    │     │    perfil       │
+└─────────────────────┘     └──────────────────┘     └─────────────────┘
+</code></pre>
+<h3>1.3 Secuencia Operativa</h3>
+<table>
+<thead>
+<tr>
+<th>Paso</th>
+<th>Aplicación</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>AutoCAD Civil 3D</td>
+<td>Dibujar alineamiento horizontal y perfil vertical</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AutoCAD Civil 3D</td>
+<td>Ejecutar comando <code>PERFIL_PRO</code> para exportar a Excel</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Excel</td>
+<td>Ejecutar cálculos hidráulicos con macros VBA</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Excel</td>
+<td>Ejecutar dibujo en AutoCAD</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. Exportación desde AutoCAD Civil 3D</h2>
+<h3>2.1 Requisitos Previos</h3>
+<ul>
+<li>AutoCAD Civil 3D con Alineamiento y Perfil Vertical dibujados</li>
+<li>Archivos en la carpeta del proyecto:<ul>
+<li><code>1_ExportExcel.lsp</code> (rutina LISP)</li>
+<li><code>1_procesar_perfil.py</code> (script Python)</li>
+</ul>
+</li>
+</ul>
+<h3>2.2 Ejecución del Comando</h3>
+<p><strong>Paso 1: Cargar la rutina LISP</strong></p>
+<p>En AutoCAD, ejecutar:</p>
+<pre><code class="language-lisp">(load "1_ExportExcel.lsp")
+</code></pre>
+<p>O simplemente escribir <code>PERFIL_PRO</code> - el sistema cargará automáticamente.</p>
+<p><strong>Paso 2: Seleccionar objetos</strong></p>
+<p>El sistema solicitará:</p>
+<ol>
+<li>Seleccionar el <strong>Alineamiento Horizontal</strong></li>
+<li>Seleccionar el <strong>Perfil Vertical</strong></li>
+</ol>
+<p><strong>Paso 3: Configurar diálogo</strong></p>
+<p>Aparecerá un diálogo con estos parámetros:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Descripción</th>
+<th>Valor Típico</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nombre Proyecto</td>
+<td>Nombre identificador del proyecto</td>
+<td>(se sugiere automáticamente desde el nombre del alineamiento)</td>
+</tr>
+<tr>
+<td>Intervalo (m)</td>
+<td>Distancia entre puntos de interpolación</td>
+<td>10.0 m</td>
+</tr>
+<tr>
+<td>Capa (m)</td>
+<td>Profundidad de enterramiento</td>
+<td>0.80 m</td>
+</tr>
+</tbody></table>
+<p><strong>Opciones de puntos geométricos:</strong></p>
+<ul>
+<li>✅ <strong>Incluir PHIs</strong> - Puntos de inflexión horizontal (recomendado)</li>
+<li>⬜ <strong>Incluir PVIs</strong> - Puntos de inflexión vertical (opcional)</li>
+<li>✅ <strong>Incluir Extremos</strong> - Inicio y fin del alineamiento (recomendado)</li>
+</ul>
+<h3>2.3 Proceso de Exportación</h3>
+<p>El sistema:</p>
+<ol>
+<li>Extrae todas las abscisas y cotas del perfil</li>
+<li>Genera un archivo CSV temporal en <code>Downloads</code></li>
+<li>Ejecuta el script Python para formatear datos</li>
+<li>Crea automáticamente las hojas necesarias en Excel:<ul>
+<li><strong>Perfil Técnico</strong>: Datos crudos de topografía</li>
+<li><strong>calculo</strong>: Hoja de trabajo hidráulico</li>
+</ul>
+</li>
+</ol>
+<h3>2.4 Resultado Esperado</h3>
+<p>Al finalizar, Excel contendrá:</p>
+<ul>
+<li>Datos de topografía (abscisa, cota terreno, coordenadas UTM)</li>
+<li>Estructura preparada para cálculos hidráulicos</li>
+</ul>
+<hr>
+<h2>3. Cálculos Hidráulicos en Excel</h2>
+<h3>3.1 Estructura de la Hoja "calculo"</h3>
+<p>La hoja de cálculo contiene las siguientes columnas principales:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Letra</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>Abscisa</td>
+<td>Distancia acumulada en metros</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Cota Terreno</td>
+<td>Elevación del terreno natural</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Cota Proyecto</td>
+<td>Elevación de la tubería (incluye profundidad)</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Corte</td>
+<td>Diferencia entre terreno y proyecto</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Pendiente</td>
+<td>Pendiente del terreno (%)</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Piezométrica</td>
+<td>Línea de carga piezométrica</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Presión</td>
+<td>Presión disponible en cada punto</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Caudal</td>
+<td>Caudal de diseño (l/s)</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Diámetro</td>
+<td>Diámetro interior de la tubería (mm)</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>Accesorio</td>
+<td>Etiquetas de TRP, VRP, PE</td>
+</tr>
+<tr>
+<td>AP</td>
+<td>Anotaciones</td>
+<td>Válvulas VA, VP y comentarios</td>
+</tr>
+</tbody></table>
+<h3>3.2 Ejecución de Cálculos</h3>
+<p><strong>Opción 1: Botón en Excel</strong></p>
+<p>En la ribbon o botón personalizado, ejecutar <code>DatosFormulas</code> o hacer clic en el botón de "Calcular".</p>
+<p><strong>Opción 2: Panel de Control</strong></p>
+<ol>
+<li>Ejecutar <code>LanzarFormulario</code> (macro)</li>
+<li>Se abre el formulario de control hidráulico</li>
+<li>Seleccionar las operaciones deseadas</li>
+</ol>
+<h3>3.3 Macros Principales</h3>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DatosFormulas</code></td>
+<td>Motor principal de cálculo hidráulico</td>
+</tr>
+<tr>
+<td><code>PendienteCalculada</code></td>
+<td>Calcula pendientes hidráulicas</td>
+</tr>
+<tr>
+<td><code>ResumenTotal</code></td>
+<td>Genera resúmenes de accesorios</td>
+</tr>
+<tr>
+<td><code>DarFormatoAccesorios</code></td>
+<td>Aplica formato visual a válvulas y accesorios</td>
+</tr>
+</tbody></table>
+<h3>3.4 Parámetros de Cálculo</h3>
+<p>Los parámetros se encuentran en la zona superior de la hoja "calculo":</p>
+<ul>
+<li><strong>Caudal de diseño</strong>: Columna S, fila 17 y siguientes</li>
+<li><strong>Diámetro de tubería</strong>: Columna U, fila 17 y siguientes</li>
+<li><strong>Coeficiente Hazen-Williams</strong>: Configurable en celdas de referencia</li>
+</ul>
+<h3>3.5 Funciones Hidráulicas Automáticas</h3>
+<p>El sistema calcula automáticamente:</p>
+<ul>
+<li><strong>Pérdida de carga</strong>: Fórmula de Hazen-Williams</li>
+<li><strong>Velocidad</strong>: Q / área sección</li>
+<li><strong>Longitud inclinada</strong>: Considerando diferencia de cotas</li>
+<li><strong>Presión disponible</strong>: Piezométrica menos proyecto</li>
+</ul>
+<hr>
+<h2>4. Dibujo en AutoCAD</h2>
+<h3>4.1 Iniciar Dibujo</h3>
+<p><strong>Desde Excel:</strong></p>
+<ol>
+<li>Ejecutar macro <code>DibujoTotalCAD2026_PRO</code></li>
+<li>O ejecutar macros individuales:<ul>
+<li><code>DibujarTerreno</code></li>
+<li><code>DibujarProyecto</code></li>
+<li><code>DibujarPiezometrica</code></li>
+<li><code>DibujarGuitarrasTotales</code></li>
+<li><code>DibujarSimbolosISO_Accesorios</code></li>
+</ul>
+</li>
+</ol>
+<h3>4.2 Elementos Generados</h3>
+<h4>4.2.1 Perfiles Longitudinales</h4>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Capa AutoCAD</th>
+<th>Color</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Terreno</td>
+<td>LPerfil</td>
+<td>(configurable)</td>
+<td>Línea de terreno natural</td>
+</tr>
+<tr>
+<td>Proyecto</td>
+<td>LProyecto</td>
+<td>(configurable)</td>
+<td>Línea de tubería</td>
+</tr>
+<tr>
+<td>Piezométrica</td>
+<td>LPiezometrica</td>
+<td>(configurable)</td>
+<td>Línea de carga</td>
+</tr>
+</tbody></table>
+<h4>4.2.2 Guitarra (Grilla)</h4>
+<p>El sistema dibuja automáticamente:</p>
+<ul>
+<li>Marco de contorno</li>
+<li>Grilla vertical y horizontal</li>
+<li>Títulos y etiquetas</li>
+<li>Líneas de accesorios</li>
+<li>Marcas laterales</li>
+</ul>
+<h4>4.2.3 Accesorios (Símbolos ISO)</h4>
+<table>
+<thead>
+<tr>
+<th>Símbolo</th>
+<th>Representación</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VA (Válvula de Aire)</td>
+<td>Triángulo filled + círculo en punta</td>
+</tr>
+<tr>
+<td>VP (Válvula de Purga)</td>
+<td>Triángulo invertido + línea de purga</td>
+</tr>
+<tr>
+<td>VRP (Válvula Reductora)</td>
+<td>Dos triángulos (corbatín)</td>
+</tr>
+<tr>
+<td>TRP (Tanque Rompe Presión)</td>
+<td>Rectángulo con línea de nivel</td>
+</tr>
+<tr>
+<td>PE (Paso Elevado)</td>
+<td>Arco semicircular</td>
+</tr>
+</tbody></table>
+<h4>4.2.4 Tabla Resumen</h4>
+<p>Se genera automáticamente a la izquierda del perfil con:</p>
+<ul>
+<li>N° correlativo</li>
+<li>Tipo de accesorio</li>
+<li>Abscisa</li>
+<li>Cota de terreno</li>
+</ul>
+<h3>4.3 Configuración de Dibujo</h3>
+<p>Hoja <strong>"DibujoAcad"</strong> contiene todos los parámetros:</p>
+<table>
+<thead>
+<tr>
+<th>Sección</th>
+<th>Parámetros</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Escalas</td>
+<td>Escala horizontal y vertical</td>
+</tr>
+<tr>
+<td>Capas</td>
+<td>Nombre y color de cada capa</td>
+</tr>
+<tr>
+<td>Textos</td>
+<td>Altura, rotación, estilo</td>
+</tr>
+<tr>
+<td>Guitarra</td>
+<td>Paso, filas, separación</td>
+</tr>
+<tr>
+<td>Símbolos</td>
+<td>Tamaño y factor de escala</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. Accesorios y Elementos Especiales</h2>
+<h3>5.1 Tipos de Accesorios</h3>
+<p>El sistema permite incorporar:</p>
+<table>
+<thead>
+<tr>
+<th>Accesorio</th>
+<th>Código</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Válvula de Aire</td>
+<td>VA</td>
+<td>Elimina aire de la conducción</td>
+</tr>
+<tr>
+<td>Válvula de Purga</td>
+<td>VP</td>
+<td>Permite vaciado y limpieza</td>
+</tr>
+<tr>
+<td>Válvula Reductora</td>
+<td>VRP</td>
+<td>Reduce presión en zona</td>
+</tr>
+<tr>
+<td>Tanque Rompe Presión</td>
+<td>TRP</td>
+<td>Disipa energía hidráulica</td>
+</tr>
+<tr>
+<td>Paso Elevado</td>
+<td>PE</td>
+<td>Cruza depresión sin enterrar</td>
+</tr>
+</tbody></table>
+<h3>5.2 Insertar Accesorios</h3>
+<p><strong>Método 1: Botones de la Ribbon</strong></p>
+<ol>
+<li>Posicionarse en la fila donde se insertará el accesorio</li>
+<li>Hacer clic en el botón correspondiente:<ul>
+<li>"Insertar TRP"</li>
+<li>"Insertar VRP"</li>
+<li>"Insertar PE"</li>
+</ul>
+</li>
+</ol>
+<p><strong>Método 2: Manual</strong></p>
+<ol>
+<li>Escribir directamente el código en la columna AP (Anotaciones)</li>
+<li>Ejecutar <code>DatosFormulas</code> para actualizar</li>
+</ol>
+<h3>5.3 Cálculo Automático de Válvulas</h3>
+<p>El sistema detecta automáticamente dónde colocar:</p>
+<ul>
+<li><strong>Válvulas de Aire (VA)</strong>: Cuando hay cambio de pendiente positivo (subida)</li>
+<li><strong>Válvulas de Purga (VP)</strong>: Cuando hay cambio de pendiente negativo (bajada)</li>
+</ul>
+<p>Parámetros configurables:</p>
+<ul>
+<li><code>DesMinVA</code>: Desnivel mínimo para activar VA</li>
+<li><code>DminVA</code>: Distancia mínima entre válvulas</li>
+</ul>
+<h3>5.4 Paso Elevado (PE)</h3>
+<p>Para dibujar un paso elevado:</p>
+<ol>
+<li>Marcar punto INICIO con código "PE-1 INI"</li>
+<li>Marcar punto FINAL con código "PE-1 FIN"</li>
+<li>El sistema "aplana" la línea de proyecto entre ambos puntos</li>
+<li>La línea piezométrica se adapta al nuevo perfil</li>
+</ol>
+<hr>
+<h2>6. Configuración y Parámetros</h2>
+<h3>6.1 Hojas de Configuración</h3>
+<table>
+<thead>
+<tr>
+<th>Hoja</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>calculo</td>
+<td>Parámetros hidráulicos y resultados</td>
+</tr>
+<tr>
+<td>DibujoAcad</td>
+<td>Configuración de dibujo en AutoCAD</td>
+</tr>
+<tr>
+<td>Tuberia PEAD</td>
+<td>Catálogo de tuberías disponibles</td>
+</tr>
+</tbody></table>
+<h3>6.2 Catálogo de Tuberías</h3>
+<p>En la hoja "Tuberia PEAD":</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V</td>
+<td>Diámetro nominal (mm)</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Diámetro exterior (mm)</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>Espesor pared (mm)</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>Presión nominal (PN)</td>
+</tr>
+<tr>
+<td>...</td>
+<td>Series disponibles (S5, S8, S10, etc.)</td>
+</tr>
+</tbody></table>
+<h3>6.3 Parámetros de Diseño</h3>
+<p><strong>Caudal (Q)</strong>: l/s
+<strong>Diámetro (D)</strong>: mm
+<strong>Coeficiente C</strong>: Hazen-Williams (típico 140-150 para PEAD)
+<strong>Profundidad</strong>: metros bajo terreno</p>
+<h3>6.4 Mensajes de Error Comunes</h3>
+<table>
+<thead>
+<tr>
+<th>Mensaje</th>
+<th>Causa</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>"No hay datos en hoja calculo"</td>
+<td>Perfil no exportado</td>
+<td>Ejecutar PERFIL_PRO en Civil 3D</td>
+</tr>
+<tr>
+<td>"AutoCAD no detectado"</td>
+<td>AutoCAD cerrado</td>
+<td>Abrir AutoCAD antes de dibujar</td>
+</tr>
+<tr>
+<td>"Válvulas no aparecen"</td>
+<td>Faltan datos de presión</td>
+<td>Ejecutar DatosFormulas completo</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Anexo: Atajos de Teclado y Comandos</h2>
+<h3>En AutoCAD Civil 3D</h3>
+<ul>
+<li><code>PERFIL_PRO</code> - Iniciar exportación a Excel</li>
+</ul>
+<h3>En Excel</h3>
+<ul>
+<li><code>Ctrl+Shift+F9</code> - Forzar recálculo completo</li>
+<li><code>Alt+F8</code> - Abrir macros disponibles</li>
+</ul>
+<hr>
+<h2>Soporte Técnico</h2>
+<p><strong>Desarrollado por</strong>: Ing. Patricio Sarmiento Reinoso
+<strong>Versión</strong>: 2026
+<strong>Contacto</strong>: [Incluir información de contacto]</p>
+<hr>
+<p><em>Documento generado automáticamente. Última actualización: Abril 2026</em></p>
+</div>
+                </div>
+            
+                <div id="content-1" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(1)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Exportación de Perfil desde AutoCAD Civil 3D</h1>
+<h2>Índice del Módulo</h2>
+<ol>
+<li><a href="#1-preparaci%C3%B3n-del-entorno">Preparación del Entorno</a></li>
+<li><a href="#2-estructura-de-archivos">Estructura de Archivos</a></li>
+<li><a href="#3-comando-perfil_pro">Comando PERFIL_PRO</a></li>
+<li><a href="#4-selecci%C3%B3n-de-objetos">Selección de Objetos</a></li>
+<li><a href="#5-configuraci%C3%B3n-del-di%C3%A1logo">Configuración del Diálogo</a></li>
+<li><a href="#6-procesamiento-y-exportaci%C3%B3n">Procesamiento y Exportación</a></li>
+<li><a href="#7-soluci%C3%B3n-de-problemas">Solución de Problemas</a></li>
+</ol>
+<hr>
+<h2>1. Preparación del Entorno</h2>
+<h3>1.1 Archivos Requeridos</h3>
+<p>Para que la exportación funcione correctamente, necesitas estos dos archivos en la misma carpeta de tu dibujo:</p>
+<table>
+<thead>
+<tr>
+<th>Archivo</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>1_ExportExcel.lsp</code></td>
+<td>Rutina LISP principal</td>
+</tr>
+<tr>
+<td><code>1_procesar_perfil.py</code></td>
+<td>Script Python para formateo</td>
+</tr>
+</tbody></table>
+<h3>1.2 Ubicación Recomendada</h3>
+<p>Coloca los archivos en la misma carpeta donde guardarás tu dibujo de AutoCAD (<code>*.dwg</code>):</p>
+<pre><code>C:\Proyectos\Conduccion\
+├── MiProyecto.dwg
+├── 1_ExportExcel.lsp
+└── 1_procesar_perfil.py
+</code></pre>
+<h3>1.3 Carga Automática (Opcional)</h3>
+<p>Para cargar automáticamente la rutina al abrir AutoCAD:</p>
+<ol>
+<li>Opciones → Archivos → Ruta de búsqueda de archivos de soporte</li>
+<li>Agregar la carpeta donde guardas los archivos</li>
+<li>En <code>acad.lsp</code> o <code>acad.mnl</code> agregar:<pre><code class="language-lisp">(load "1_ExportExcel.lsp")
+</code></pre>
+</li>
+</ol>
+<hr>
+<h2>2. Estructura de Archivos</h2>
+<h3>2.1 1_ExportExcel.lsp</h3>
+<p>Este archivo contiene las siguientes funciones principales:</p>
+<pre><code>1_ExportExcel.lsp
+├── get-perfil-pro-dir      → Localiza la carpeta del script
+├── round-station          → Redondea estaciones a 4 decimales
+├── station-in-pts         → Verifica si una estación ya existe
+├── get-prop-dual          → Lee propiedades con nombres alternativos
+├── extraer-phi            → Extrae PHIs del alineamiento (4 métodos)
+├── extraer-pvi            → Extrae PVIs del perfil vertical
+├── C:PERFIL_PRO           → Comando principal
+└── C:DIAG_SEG             → Diagnóstico de segmentos (debug)
+</code></pre>
+<h3>2.2 Extracción de PHIs (Puntos de Inflexión Horizontal)</h3>
+<p>El sistema utiliza <strong>4 métodos</strong> para extraer los PHIs del alineamiento:</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Descripción</th>
+<th>Compatibilidad</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M1</td>
+<td>GetPICollection API Civil 3D ≥2010</td>
+<td>Civil 3D moderno</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Colección Entities (StartingStation/EndingStation)</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>PassThroughPoint via DXF</td>
+<td>Civil 3D</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Unión entre segmentos</td>
+<td>Fallback general</td>
+</tr>
+</tbody></table>
+<p><strong>Orden de ejecución</strong>: El sistema intenta M1 → M2 → M3 → M4 secuencialmente hasta encontrar resultados.</p>
+<h3>2.3 Extracción de PVIs (Puntos de Inflexión Vertical)</h3>
+<p>Extrae automáticamente del perfil vertical:</p>
+<ul>
+<li>PVIs intermedios (excluye INICIO/FIN)</li>
+<li>Numeración correlativa: PVi-1, PVi-2, etc.</li>
+</ul>
+<hr>
+<h2>3. Comando PERFIL_PRO</h2>
+<h3>3.1 Ejecución</h3>
+<p>En la línea de comandos de AutoCAD Civil 3D:</p>
+<pre><code>Comando: PERFIL_PRO
+</code></pre>
+<p>O si la rutina no está cargada:</p>
+<pre><code>Comando: (load "1_ExportExcel.lsp")
+Comando: PERFIL_PRO
+</code></pre>
+<h3>3.2 Secuencia del Comando</h3>
+<pre><code>1. Verifica presencia de archivos necesarios
+2. Solicita seleccionar Alineamiento Horizontal
+3. Solicita seleccionar Perfil Vertical
+4. Muestra diálogo de configuración
+5. Procesa datos y genera CSV
+6. Ejecuta Python para formateo
+7. Abre/actualiza Excel con los datos
+</code></pre>
+<hr>
+<h2>4. Selección de Objetos</h2>
+<h3>4.1 Seleccionar Alineamiento Horizontal</h3>
+<p>El sistema solicita:</p>
+<pre><code>1. Seleccione el Alineamiento Horizontal:
+</code></pre>
+<p><strong>Cómo identificar un alineamiento válido:</strong></p>
+<ul>
+<li>Objeto de Civil 3D tipo <em>AeccAlignment</em></li>
+<li>Aparece con iconos dePI (puntos de inflexión)</li>
+<li>Tiene nombre visible en Prospector</li>
+</ul>
+<h3>4.2 Seleccionar Perfil Vertical</h3>
+<p>El sistema solicita:</p>
+<pre><code>2. Seleccione el Perfil Vertical:
+</code></pre>
+<p><strong>Cómo identificar un perfil válido:</strong></p>
+<ul>
+<li>Objeto de Civil 3D tipo <em>AeccProfile</em> o <em>AeccProfileView</em></li>
+<li>Debe estar vinculado al alineamiento seleccionado</li>
+<li>Contiene la línea de terreno natural</li>
+</ul>
+<h3>4.3 Validación de Selección</h3>
+<p>El sistema verifica que:</p>
+<ol>
+<li>El alineamiento sea de tipo correcto (contiene "ALIGNMENT")</li>
+<li>El perfil sea de tipo correcto (contiene "PROFILE" o "VALIGNMENT")</li>
+<li>Ambos objetos tengan rangos definidos (StartStation/EndStation)</li>
+</ol>
+<hr>
+<h2>5. Configuración del Diálogo</h2>
+<h3>5.1 Ventana de Opciones</h3>
+<p>Al ejecutar PERFIL_PRO aparece un diálogo con estos campos:</p>
+<pre><code>┌─────────────────────────────────────────┐
+│ Excel Perfil Pro v1.6.4                  │
+├─────────────────────────────────────────┤
+│ Nombre Proyecto: [______________]       │
+│ Intervalo (m): [____10.0_____]           │
+│ Capa (m):       [____0.80______]         │
+├─────────────────────────────────────────┤
+│ Puntos Geometria:                        │
+│ ☑ Incluir PHIs (PI Horizontal)           │
+│ ☐ Incluir PVIs (PI Vertical)             │
+│ ☑ Incluir Extremos (INICIO/FIN)          │
+├─────────────────────────────────────────┤
+│ [Aceptar] [Cancelar]                     │
+└─────────────────────────────────────────┘
+</code></pre>
+<h3>5.2 Descripción de Campos</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Descripción</th>
+<th>Valor Predeterminado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nombre Proyecto</td>
+<td>Identificador del proyecto</td>
+<td>(se sugiere desde nombre del alineamiento)</td>
+</tr>
+<tr>
+<td>Intervalo (m)</td>
+<td>Distancia entre puntos intermedios</td>
+<td>10.0 m</td>
+</tr>
+<tr>
+<td>Capa (m)</td>
+<td>Profundidad de enterramiento</td>
+<td>0.80 m</td>
+</tr>
+</tbody></table>
+<h3>5.3 Opciones de Puntos de Geometría</h3>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Descripción</th>
+<th>Recomendación</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PHIs</td>
+<td>Puntos de inflexión del alineamiento horizontal</td>
+<td>✅ Marcada</td>
+</tr>
+<tr>
+<td>PVIs</td>
+<td>Puntos de inflexión del perfil vertical</td>
+<td>⬜ Desmarcada</td>
+</tr>
+<tr>
+<td>Extremos</td>
+<td>Inicio y fin del alineamiento</td>
+<td>✅ Marcada</td>
+</tr>
+</tbody></table>
+<h3>5.4 Nombre del Proyecto</h3>
+<p>El sistema intenta extraer el nombre automáticamente:</p>
+<ol>
+<li>Si el alineamiento tiene paréntesis con texto descriptivo, lo usa<ul>
+<li>Ejemplo: "Eje A (Tramo 1)" → Proyecto: "Tramo 1"</li>
+</ul>
+</li>
+<li>Si no hay paréntesis, usa el nombre completo del alineamiento</li>
+</ol>
+<hr>
+<h2>6. Procesamiento y Exportación</h2>
+<h3>6.1 Generación del CSV</h3>
+<p>El sistema crea un archivo temporal:</p>
+<pre><code>%USERPROFILE%\Downloads\temp_perfil.csv
+</code></pre>
+<p><strong>Estructura del CSV:</strong></p>
+<pre><code>ABSCISA,COTA TERRENO,TIPO,ESTE,NORTE
+0+000.00,450.500,INICIO,500234.56,9876543.21
+0+010.00,449.800, ,500234.86,9876543.56
+...
+</code></pre>
+<h3>6.2 Tipos de Puntos</h3>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(vacío)</td>
+<td>Punto de intervalo regular</td>
+</tr>
+<tr>
+<td>INICIO</td>
+<td>Primer punto del perfil</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>Último punto del perfil</td>
+</tr>
+<tr>
+<td>PHi-1, PHi-2, ...</td>
+<td>Punto de inflexión horizontal</td>
+</tr>
+<tr>
+<td>PVi-1, PVi-2, ...</td>
+<td>Punto de inflexión vertical</td>
+</tr>
+</tbody></table>
+<h3>6.3 Script Python (1_procesar_perfil.py)</h3>
+<p>El script Python realiza:</p>
+<ol>
+<li>Leer el CSV temporal</li>
+<li>Calcular cotas de proyecto (terreno - profundidad)</li>
+<li>Generar estructura para Excel</li>
+<li>Copiar datos al portapapeles</li>
+<li>Insertar en las hojas correspondientes</li>
+</ol>
+<h3>6.4 Hojas Generadas en Excel</h3>
+<table>
+<thead>
+<tr>
+<th>Hoja</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Perfil Técnico</td>
+<td>Datos crudos: abscisa, cota terreno, coordenadas UTM</td>
+</tr>
+<tr>
+<td>calculo</td>
+<td>Estructura preparada con todas las columnas para cálculos</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>7. Solución de Problemas</h2>
+<h3>7.1 Errores Comunes</h3>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Causa</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>"No se encontró 1_procesar_perfil.py"</td>
+<td>Archivo Python faltante</td>
+<td>Copiar el archivo a la misma carpeta</td>
+</tr>
+<tr>
+<td>"ObjectName no válido"</td>
+<td>Selección incorrecta</td>
+<td>Seleccionar objetos de Civil 3D válidos</td>
+</tr>
+<tr>
+<td>"Estación fuera de rango"</td>
+<td>Perfil más largo que eje</td>
+<td>Verificar correspondencia eje-perfil</td>
+</tr>
+</tbody></table>
+<h3>7.2 PHIs no se extraen</h3>
+<p>Si los PHIs aparecen en cero:</p>
+<ul>
+<li>Verificar que el alineamiento tenga tangentes múltiples</li>
+<li>Usar el comando <code>DIAG_SEG</code> para diagnóstico</li>
+</ul>
+<h3>7.3 Comando DIAG_SEG (Diagnóstico)</h3>
+<p>Para verificar las propiedades de los segmentos del alineamiento:</p>
+<pre><code>Comando: DIAG_SEG
+Seleccione el ALINEAMIENTO:
+</code></pre>
+<p>El comando imprimirá:</p>
+<ul>
+<li>Cantidad de segmentos</li>
+<li>Propiedades StartingStation/EndingStation de cada uno</li>
+<li>Dump completo de propiedades disponibles</li>
+</ul>
+<h3>7.4 Validación de Longitud</h3>
+<p>El sistema muestra advertencia si:</p>
+<pre><code>ADVERTENCIA DE LONGITUD:
+El Perfil Vertical (1234.56m) es más largo que
+el Alineamiento Horizontal (1234.00m).
+Las coordenadas UTM en Excel se REPETIRÁN al final.
+</code></pre>
+<p>Esto indica que el perfil tiene estaciones más allá del eje - revisar el diseño.</p>
+<hr>
+<h2>7.5 Notas Técnicas</h2>
+<h3>7.5.1 Métodos de Extracción de PHIs</h3>
+<p>El código implementa un sistema progresivo de 4 métodos:</p>
+<pre><code class="language-lisp">;; M1: GetPICollection (Civil 3D &gt;= 2010)
+;; M2: Colección Entities (StartingStation/EndingStation)
+;; M3: PassThroughPoint + StationAndOffset
+;; M4: Union de segmentos (EndingStation N como PHI N+1)
+</code></pre>
+<h3>7.5.2 Tolerancias Utilizadas</h3>
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tolerancia estación duplicada</td>
+<td>0.02 m</td>
+</tr>
+<tr>
+<td>Tolerancia filtro extremos</td>
+<td>0.05 m</td>
+</tr>
+<tr>
+<td>Redondeo estaciones</td>
+<td>4 decimales</td>
+</tr>
+</tbody></table>
+<h3>7.5.3 Compatibilidad</h3>
+<ul>
+<li><strong>AutoCAD Civil 3D</strong>: 2010 y versiones posteriores</li>
+<li><strong>Python</strong>: 3.x con soporte Unicode</li>
+<li><strong>Excel</strong>: 2010 y versiones posteriores</li>
+</ul>
+<hr>
+<h2>Atajos y Referencias</h2>
+<ul>
+<li><strong>Comando principal</strong>: <code>PERFIL_PRO</code></li>
+<li><strong>Comando diagnóstico</strong>: <code>DIAG_SEG</code></li>
+<li><strong>Versión actual</strong>: v1.6.4</li>
+<li><strong>Desarrollador</strong>: Ing. Patricio Sarmiento Reinoso</li>
+</ul>
+<hr>
+<p><em>Este documento forma parte del Manual de Usuario del Sistema de Conducciones de Agua</em></p>
+</div>
+                </div>
+            
+                <div id="content-2" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(2)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Cálculos Hidráulicos en Excel</h1>
+<h2>Índice del Módulo</h2>
+<ol>
+<li><a href="#1-estructura-de-la-hoja-de-c%C3%A1lculo">Estructura de la Hoja de Cálculo</a></li>
+<li><a href="#2-ejecuci%C3%B3n-de-c%C3%A1lculos">Ejecución de Cálculos</a></li>
+<li><a href="#3-macros-y-funciones-disponibles">Macros y Funciones Disponibles</a></li>
+<li><a href="#4-par%C3%A1metros-de-dise%C3%B1o">Parámetros de Diseño</a></li>
+<li><a href="#5-interpretaci%C3%B3n-de-resultados">Interpretación de Resultados</a></li>
+<li><a href="#6-res%C3%BAmenes-y-reportes">Resúmenes y Reportes</a></li>
+</ol>
+<hr>
+<h2>1. Estructura de la Hoja de Cálculo</h2>
+<h3>1.1 Hoja "calculo"</h3>
+<p>La hoja principal de trabajo contiene la siguiente estructura:</p>
+<table>
+<thead>
+<tr>
+<th>Zona</th>
+<th>Filas</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cabecera</td>
+<td>1-16</td>
+<td>Configuración y parámetros</td>
+</tr>
+<tr>
+<td>Datos</td>
+<td>17+</td>
+<td>Punto de inicio de cálculos</td>
+</tr>
+<tr>
+<td>Referencias</td>
+<td>Various</td>
+<td>Coeficientes, catálogos</td>
+</tr>
+</tbody></table>
+<h3>1.2 Columnas Principales</h3>
+<table>
+<thead>
+<tr>
+<th>Letra</th>
+<th>Nombre</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H</td>
+<td>Punto</td>
+<td>Número correlativo de punto</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Abscisa</td>
+<td>Distancia acumulada (m)</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Terreno</td>
+<td>Cota del terreno natural (m)</td>
+</tr>
+<tr>
+<td>K</td>
+<td>Pendiente</td>
+<td>Pendiente del terreno (%)</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Longitud</td>
+<td>Distancia al punto siguiente (m)</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Cota Terreno</td>
+<td>(Duplicado para fórmulas)</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Proyecto</td>
+<td>Cota de la tubería (m)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Corte</td>
+<td>Desmonte/relleno (m)</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Piezométrica</td>
+<td>Línea de carga piezométrica (m)</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>Pend.Proy</td>
+<td>Pendiente de la línea piezométrica (%)</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Presión</td>
+<td>Presión disponible (mca)</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Caudal</td>
+<td>Caudal de diseño (l/s)</td>
+</tr>
+<tr>
+<td>T</td>
+<td>Velocidad</td>
+<td>Velocidad del flujo (m/s)</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Diám.Int</td>
+<td>Diámetro interior (mm)</td>
+</tr>
+<tr>
+<td>V</td>
+<td>Diám.Ext</td>
+<td>Diámetro exterior (mm)</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Tubería</td>
+<td>Descripción de tubería</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>Accesorio</td>
+<td>Etiquetas de accesorios</td>
+</tr>
+<tr>
+<td>AP</td>
+<td>Anotaciones</td>
+<td>Válvulas y comentarios</td>
+</tr>
+</tbody></table>
+<h3>1.3 Estructura de Datos</h3>
+<pre><code>Fila 16: Títulos de columna
+Fila 17: Primer punto de datos
+Fila 18+: Puntos subsiguientes
+</code></pre>
+<p><strong>Importante</strong>: Los cálculos begin en la fila 17. No eliminar ni insertar filas antes de esta fila.</p>
+<hr>
+<h2>2. Ejecución de Cálculos</h2>
+<h3>2.1 Método Principal: DatosFormulas</h3>
+<p>La macro principal <code>DatosFormulas</code> ejecuta todos los cálculos hidráulicos:</p>
+<pre><code class="language-vba">Sub DatosFormulas()
+    ' Motor completo de cálculo hidráulico
+    ' Calcula: pendientes, presiones, velocidades, pérdidas
+End Sub
+</code></pre>
+<p><strong>Qué hace esta macro:</strong></p>
+<ol>
+<li>Limpia zonas de cálculo anteriores</li>
+<li>Verifica créditos del proyecto</li>
+<li>Aplica fórmulas a todas las columnas</li>
+<li>Calcula pendientes hidráulicas</li>
+<li>Genera resúmenes automáticos</li>
+<li>Aplica formato a accesorios</li>
+</ol>
+<h3>2.2 Orden de Ejecución</h3>
+<p>El flujo de cálculo es:</p>
+<pre><code>1. DatosFormulas
+   ├── Limpia zonas de cálculo
+   ├── Aplica fórmulas de pendientes
+   ├── Calcula línea piezométrica
+   ├── Determina presiones
+   ├── Identifica válvulas automáticas
+   ├── Genera resúmenes
+   └── Aplica formato visual
+</code></pre>
+<h3>2.3 PendienteCalculada</h3>
+<p>Ejecuta el cálculo de pendientes entre nodos:</p>
+<pre><code class="language-vba">Sub PendienteCalculada()
+    ' Calcula:
+    ' - Pendiente hidráulica (%)
+    - Longitud inclinada (m)
+    ' - Deflexión entre tramos (°)
+    ' - Números de punto correlativos
+End Sub
+</code></pre>
+<hr>
+<h2>3. Macros y Funciones Disponibles</h2>
+<h3>3.1 Macros de Cálculo</h3>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Función</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DatosFormulas</code></td>
+<td>Motor principal de cálculo</td>
+<td>Ejecutar después de datos listos</td>
+</tr>
+<tr>
+<td><code>PendienteCalculada</code></td>
+<td>Calcula pendientes</td>
+<td>Actualizar pendientes</td>
+</tr>
+<tr>
+<td><code>ResumenTotal</code></td>
+<td>Genera todos los resúmenes</td>
+<td>Reportes finales</td>
+</tr>
+<tr>
+<td><code>ResumenCalculo</code></td>
+<td>Resumen de accesorios</td>
+<td>Lista de VA, VP, TRP, VRP, PE</td>
+</tr>
+<tr>
+<td><code>Resumen3Calculo</code></td>
+<td>Resumen de tramos</td>
+<td>Lista por cambio de diámetro</td>
+</tr>
+<tr>
+<td><code>MaxMinCalculo</code></td>
+<td>Calcula valores extremos</td>
+<td>Para escalas de gráfico</td>
+</tr>
+<tr>
+<td><code>AguaDatosDatPerfil</code></td>
+<td>Transfiere al perfil</td>
+<td>Preparar datos para dibujo</td>
+</tr>
+<tr>
+<td><code>FormulasPline</code></td>
+<td>Genera comandos CAD</td>
+<td>Para dibujar en AutoCAD</td>
+</tr>
+</tbody></table>
+<h3>3.2 Funciones de Cálculo</h3>
+<table>
+<thead>
+<tr>
+<th>Función</th>
+<th>Descripción</th>
+<th>Fórmula</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>calculav(Q, di)</code></td>
+<td>Velocidad (m/s)</td>
+<td>Q / (π × di²/4)</td>
+</tr>
+<tr>
+<td><code>LongInc(c1, c2, DH)</code></td>
+<td>Longitud inclinada</td>
+<td>√((c1-c2)² + DH²)</td>
+</tr>
+<tr>
+<td><code>PerdidaCarga(Q, Li, C, D)</code></td>
+<td>Pérdida Hazen-Williams</td>
+<td>10.67 × Li × Q^1.852 / (C^1.852 × D^4.87)</td>
+</tr>
+<tr>
+<td><code>pendiente1(x1,y1,x2,y2)</code></td>
+<td>Pendiente entre puntos</td>
+<td>(y1-y2)×100/(x1-x2)</td>
+</tr>
+<tr>
+<td><code>Interpolar(x1,y1,x2,y2,x)</code></td>
+<td>Interpolación lineal</td>
+<td>y = m(x-x1) + y1</td>
+</tr>
+</tbody></table>
+<h3>3.3 Macros de Accesorios</h3>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TanqueRompePresion()</code></td>
+<td>Inserta fila TRP</td>
+</tr>
+<tr>
+<td><code>ValvulaReductoraPresion()</code></td>
+<td>Inserta fila VRP</td>
+</tr>
+<tr>
+<td><code>PasoElevado()</code></td>
+<td>Marca inicio/fin de PE</td>
+</tr>
+<tr>
+<td><code>EliminarValvulasoTanques()</code></td>
+<td>Elimina accesorio</td>
+</tr>
+</tbody></table>
+<h3>3.4 Utilidades</h3>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>InterpolarManual()</code></td>
+<td>Interpolación manual por abscisa</td>
+</tr>
+<tr>
+<td><code>LimpiarVAlvulasVA_VP()</code></td>
+<td>Elimina válvulas automáticas</td>
+</tr>
+<tr>
+<td><code>CopiarDatosPerfil()</code></td>
+<td>Trae datos del Perfil Técnico</td>
+</tr>
+<tr>
+<td><code>LanzarFormulario()</code></td>
+<td>Abre Panel de Control</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>4. Parámetros de Diseño</h2>
+<h3>4.1 Parámetros de la Cabecera</h3>
+<p>En la zona superior de la hoja "calculo":</p>
+<pre><code>┌────────────────────────────────────────┐
+│ CREDITOS: Ing. Patricio Sarmiento R.  │
+│                                    ↓   │
+│ Cota Piezométrica inicial:  500.000   │
+│ Cota Terreno inicial:        450.000   │
+│ Coeficiente C (Hazen-Williams): 140   │
+│ Presión mínima residual:      10.0 m   │
+└────────────────────────────────────────┘
+</code></pre>
+<h3>4.2 Datos por Punto</h3>
+<p>Para cada punto de la conducción:</p>
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Columna</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Caudal</td>
+<td>S</td>
+<td>Caudal de diseño (l/s)</td>
+</tr>
+<tr>
+<td>Diámetro</td>
+<td>U</td>
+<td>Diámetro interior (mm)</td>
+</tr>
+<tr>
+<td>Coef. C</td>
+<td>V</td>
+<td>Coeficiente Hazen-Williams</td>
+</tr>
+</tbody></table>
+<h3>4.3 Catálogo de Tuberías</h3>
+<p>Hoja "Tuberia PEAD" contiene el catálogo:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V</td>
+<td>Diámetro nominal (mm)</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Diámetro exterior (mm)</td>
+</tr>
+<tr>
+<td>X</td>
+<td>Espesor (mm)</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>Diámetro interior (mm)</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>Presión nominal (PN)</td>
+</tr>
+<tr>
+<td>AA+</td>
+<td>Series (S5, S8, S10, S12.5, S16)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. Interpretación de Resultados</h2>
+<h3>5.1 Verificación de Presiones</h3>
+<p>La columna <strong>R (Presión)</strong> indica la presión disponible en cada punto:</p>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Estado</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt; 0</td>
+<td>✅ Normal</td>
+<td>Presión positiva disponible</td>
+</tr>
+<tr>
+<td>0</td>
+<td>⚠️ Crítico</td>
+<td>Presión nula - revisar diseño</td>
+</tr>
+<tr>
+<td>&lt; 0</td>
+<td>❌ Negativo</td>
+<td>Presión negativa - ERROR</td>
+</tr>
+</tbody></table>
+<h3>5.2 Verificación de Velocidades</h3>
+<p>La columna <strong>T (Velocidad)</strong> debe estar en rango:</p>
+<table>
+<thead>
+<tr>
+<th>Velocidad</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt; 0.6 m/s</td>
+<td>⚠️ Muy baja - riesgo de sedimentación</td>
+</tr>
+<tr>
+<td>0.6 - 3.0 m/s</td>
+<td>✅ Normal</td>
+</tr>
+<tr>
+<td>&gt; 3.0 m/s</td>
+<td>⚠️ Muy alta - riesgo de golpe de ariete</td>
+</tr>
+</tbody></table>
+<h3>5.3 Columna de Verificación</h3>
+<p>Columna <strong>AK (Verificación)</strong>:</p>
+<ul>
+<li>Muestra "ok" si la presión es ≥ 10% de la presión mínima</li>
+<li>Muestra "ojo" si está cerca del límite</li>
+</ul>
+<h3>5.4 Pérdidas Acumuladas</h3>
+<p>Columna <strong>AF</strong> muestra la pérdida de carga acumulada a lo largo de la conducción.</p>
+<hr>
+<h2>6. Resúmenes y Reportes</h2>
+<h3>6.1 Resumen de Accesorios</h3>
+<p>Genera una tabla con todos los accesorios:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BA</td>
+<td>N° correlativo</td>
+</tr>
+<tr>
+<td>BB</td>
+<td>Abscisa</td>
+</tr>
+<tr>
+<td>BC</td>
+<td>Cota Terreno</td>
+</tr>
+<tr>
+<td>BD</td>
+<td>Cota Piezométrica</td>
+</tr>
+<tr>
+<td>BE</td>
+<td>Presión</td>
+</tr>
+<tr>
+<td>BF</td>
+<td>Tipo (VA-1, VP-1, TRP-1, etc.)</td>
+</tr>
+</tbody></table>
+<h3>6.2 Resumen de Tramos</h3>
+<p>Genera una tabla por cada cambio de diámetro o caudal:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BZ</td>
+<td>N° Tramo</td>
+</tr>
+<tr>
+<td>CA</td>
+<td>Abscisa inicio</td>
+</tr>
+<tr>
+<td>CB</td>
+<td>Cota Terreno</td>
+</tr>
+<tr>
+<td>CC</td>
+<td>Cota Proyecto</td>
+</tr>
+<tr>
+<td>CD</td>
+<td>Corte</td>
+</tr>
+<tr>
+<td>CE</td>
+<td>Longitud del tramo</td>
+</tr>
+<tr>
+<td>CF</td>
+<td>Diámetro interior</td>
+</tr>
+<tr>
+<td>CG</td>
+<td>Diámetro nominal</td>
+</tr>
+<tr>
+<td>CH</td>
+<td>Velocidad</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>Caudal</td>
+</tr>
+<tr>
+<td>CJ</td>
+<td>Descripción integrada</td>
+</tr>
+<tr>
+<td>CK</td>
+<td>PN</td>
+</tr>
+<tr>
+<td>CL</td>
+<td>Serie</td>
+</tr>
+</tbody></table>
+<h3>6.3 Fórmulas de AutoCAD</h3>
+<p>Columnas <strong>CN a CU</strong> generan comandos para dibujar en AutoCAD:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Comando</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CN</td>
+<td>POINT</td>
+</tr>
+<tr>
+<td>CO</td>
+<td>PLINE (Terreno)</td>
+</tr>
+<tr>
+<td>CP</td>
+<td>PLINE (Proyecto)</td>
+</tr>
+<tr>
+<td>CQ</td>
+<td>PLINE (Piezométrica)</td>
+</tr>
+<tr>
+<td>CS</td>
+<td>PLINE (Terreno ×5)</td>
+</tr>
+<tr>
+<td>CT</td>
+<td>PLINE (Proyecto ×5)</td>
+</tr>
+<tr>
+<td>CU</td>
+<td>PLINE (Piezométrica ×5)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Ejemplo de Uso</h2>
+<h3>Paso 1: Datos Listos</h3>
+<p>Verificar que la columna I (Abscisas) y J (Terreno) tengan datos desde fila 17.</p>
+<h3>Paso 2: Parámetros</h3>
+<p>Ingresar caudal y diámetro en las columnas S y U de la fila 17.</p>
+<h3>Paso 3: Calcular</h3>
+<p>Ejecutar <code>DatosFormulas</code></p>
+<h3>Paso 4: Verificar</h3>
+<p>Revisar que las presiones (columna R) sean positivas.</p>
+<h3>Paso 5: Resumen</h3>
+<p>Ejecutar <code>ResumenTotal</code> para generar listados.</p>
+<hr>
+<h2>Notas Técnicas</h2>
+<h3>Fórmulas Principales</h3>
+<pre><code class="language-excel">' Pendiente del perfil
+K18 = (J18-J17)*100/(I18-I17)
+
+' Longitud entre puntos
+L18 = I18-I17
+
+' Cota de proyecto
+N17 = J17 - M17   ' (M17 = profundidad)
+
+' Cota piezométrica
+P17 = J17 - R17   ' (R17 = presión)
+
+' Pérdida de carga (Hazen-Williams)
+AE = 10.67 * Li * (Q/1000)^1.852 / (C^1.852 * (D/1000)^4.87)
+</code></pre>
+<h3>Funciones Personalizadas</h3>
+<p>El archivo incluye funciones VBA personalizadas:</p>
+<ul>
+<li><code>interpolar()</code> - Interpolación lineal</li>
+<li><code>calculav()</code> - Cálculo de velocidad</li>
+<li><code>PerdidaCarga()</code> - Fórmula de Hazen-Williams</li>
+</ul>
+<hr>
+<h2>Solución de Problemas</h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Causa</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#¡DIV/0!</td>
+<td>División por cero</td>
+<td>Verificar abscisas diferentes</td>
+</tr>
+<tr>
+<td>#¡REF!</td>
+<td>Referencia faltante</td>
+<td>Ejecutar DatosFormulas completo</td>
+</tr>
+<tr>
+<td>Presión negativa</td>
+<td>Diseño imposible</td>
+<td>Aumentar diámetro o fuente</td>
+</tr>
+<tr>
+<td>Velocidad alta</td>
+<td>Diámetro muy pequeño</td>
+<td>Verificar cálculo de diámetro</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>Este documento forma parte del Manual de Usuario del Sistema de Conducciones de Agua</em></p>
+</div>
+                </div>
+            
+                <div id="content-3" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(3)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Dibujo Automático en AutoCAD</h1>
+<h2>Índice del Módulo</h2>
+<ol>
+<li><a href="#1-introducci%C3%B3n-al-sistema-de-dibujo">Introducción al Sistema de Dibujo</a></li>
+<li><a href="#2-iniciar-el-dibujo">Iniciar el Dibujo</a></li>
+<li><a href="#3-elementos-generados">Elementos Generados</a></li>
+<li><a href="#4-s%C3%ADmbolos-de-accesorios-iso">Símbolos de Accesorios ISO</a></li>
+<li><a href="#5-configuraci%C3%B3n-de-dibujo">Configuración de Dibujo</a></li>
+<li><a href="#6-par%C3%A1metros-de-capas">Parámetros de Capas</a></li>
+<li><a href="#7-resoluci%C3%B3n-de-problemas">Resolución de Problemas</a></li>
+</ol>
+<hr>
+<h2>1. Introducción al Sistema de Dibujo</h2>
+<h3>1.1 Descripción General</h3>
+<p>El sistema genera automáticamente el perfil longitudinal completo en AutoCAD, incluyendo:</p>
+<ul>
+<li>Perfiles (terreno, proyecto, piezométrica)</li>
+<li>Guitarra (grilla) con títulos y datos</li>
+<li>Símbolos de accesorios según norma ISO</li>
+<li>Tabla resumen de accesorios</li>
+</ul>
+<h3>1.2 Requisitos</h3>
+<table>
+<thead>
+<tr>
+<th>Requisito</th>
+<th>Detalle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AutoCAD</td>
+<td>2010 o superior</td>
+</tr>
+<tr>
+<td>Excel</td>
+<td>Con datos calculados</td>
+</tr>
+<tr>
+<td>Conexión</td>
+<td>VBA - COM con AutoCAD</td>
+</tr>
+</tbody></table>
+<h3>1.3 Métodos de Ejecución</h3>
+<p><strong>Desde Excel:</strong></p>
+<ul>
+<li>Macro principal: <code>DibujoTotalCAD2026_PRO</code></li>
+<li>Macros individuales para cada elemento</li>
+<li>Botones en ribbon personalizado</li>
+</ul>
+<hr>
+<h2>2. Iniciar el Dibujo</h2>
+<h3>2.1 Macro Principal</h3>
+<pre><code class="language-vba">Sub DibujoTotalCAD2026_PRO()
+    ' Dibuja todo el perfil automáticamente
+    ' Secuencia: Guitarras → Textos → Perfiles → Accesorios
+End Sub
+</code></pre>
+<h3>2.2 Macros Individuales</h3>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>DibujarTerreno</code></td>
+<td>Solo línea de terreno</td>
+</tr>
+<tr>
+<td><code>DibujarProyecto</code></td>
+<td>Solo línea de tubería</td>
+</tr>
+<tr>
+<td><code>DibujarPiezometrica</code></td>
+<td>Solo línea piezométrica</td>
+</tr>
+<tr>
+<td><code>DibujarGuitarrasTotales</code></td>
+<td>Toda la grilla</td>
+</tr>
+<tr>
+<td><code>DibujarSimbolosISO_Accesorios</code></td>
+<td>Símbolos y tabla</td>
+</tr>
+<tr>
+<td><code>BorrarTodoCAD</code></td>
+<td>Limpia todo lo dibujado</td>
+</tr>
+</tbody></table>
+<h3>2.3 Secuencia del Dibujo</h3>
+<p>El dibujo se ejecuta en orden específico:</p>
+<pre><code>1. Guitarras
+   ├── Contorno (marco)
+   ├── Grilla interior (líneas)
+   ├── Filas inferiores (tabla)
+   ├── Títulos
+   ├── PIs (verticales de accesorios)
+   ├── Datos horizontales
+   └── Marcas
+
+2. Textos
+   ├── Abscisas (pie de grilla)
+   ├── Cotas (izquierda de grilla)
+   ├── Títulos de columnas
+   └── Abscisas paso mayor
+
+3. Perfiles
+   ├── Terreno (línea continua)
+   ├── Proyecto (línea continua)
+   └── Piezométrica (línea discontinua)
+
+4. Accesorios
+   ├── Símbolos VA, VP, VRP, TRP, PE
+   └── Tabla resumen
+</code></pre>
+<hr>
+<h2>3. Elementos Generados</h2>
+<h3>3.1 Perfiles Longitudinales</h3>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Capa</th>
+<th>Color</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Terreno</td>
+<td>LPerfil</td>
+<td>(configurable)</td>
+<td>Línea continua del terreno</td>
+</tr>
+<tr>
+<td>Proyecto</td>
+<td>LProyecto</td>
+<td>(configurable)</td>
+<td>Línea de la tubería</td>
+</tr>
+<tr>
+<td>Piezométrica</td>
+<td>LPiezometrica</td>
+<td>(configurable)</td>
+<td>Línea discontinua de carga</td>
+</tr>
+</tbody></table>
+<h3>3.2 La Guitarra (Grilla)</h3>
+<h4>3.2.1 Componentes de la Guitarra</h4>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Contorno</td>
+<td>Marco exterior del perfil</td>
+</tr>
+<tr>
+<td>Grilla vertical</td>
+<td>Líneas por abscisa (paso horizontal)</td>
+</tr>
+<tr>
+<td>Grilla horizontal</td>
+<td>Líneas por cota (paso vertical)</td>
+</tr>
+<tr>
+<td>Filas inferiores</td>
+<td>Tabla de datos hidráulicos</td>
+</tr>
+<tr>
+<td>Títulos</td>
+<td>Encabezados de columnas</td>
+</tr>
+<tr>
+<td>PIs</td>
+<td>Verticales de accesorios</td>
+</tr>
+<tr>
+<td>Marcas</td>
+<td>Ticks en bordes laterales</td>
+</tr>
+</tbody></table>
+<h4>3.2.2 Estructura de Filas</h4>
+<p>Debajo del perfil se generan las siguientes filas:</p>
+<table>
+<thead>
+<tr>
+<th>Fila</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Abscisas</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cotas de terreno</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Cotas de proyecto</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cotas piezométricas</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Presiones</td>
+</tr>
+</tbody></table>
+<h3>3.3 Datos de Coordenadas</h3>
+<p>El sistema calcula automáticamente:</p>
+<ul>
+<li><strong>Origen (0,0)</strong>: Esquina inferior izquierda del perfil</li>
+<li><strong>Escala horizontal (Eh)</strong>: mm por metro real</li>
+<li><strong>Escala vertical (Ev)</strong>: mm por metro real</li>
+<li><strong>Datum</strong>: Cota mínima menos 10m</li>
+</ul>
+<h3>3.4 Sistema de Coordenadas de Dibujo</h3>
+<pre><code>                    Y (Elevación)
+                    ↑
+                    │
+    ────────────────┼───────────────▶ X (Abscisa)
+                    │
+              Datum (y=0)
+</code></pre>
+<ul>
+<li>X = (Abscisa - AbscisaInicial) × (1000/Eh)</li>
+<li>Y = (Cota - CotaDatum) × (1000/Ev)</li>
+</ul>
+<hr>
+<h2>4. Símbolos de Accesorios ISO</h2>
+<h3>4.1 Símbolos Disponibles</h3>
+<table>
+<thead>
+<tr>
+<th>Símbolo</th>
+<th>Código</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🔺</td>
+<td>VA</td>
+<td>Válvula de Aire</td>
+</tr>
+<tr>
+<td>🔻</td>
+<td>VP</td>
+<td>Válvula de Purga</td>
+</tr>
+<tr>
+<td>⬜</td>
+<td>VRP</td>
+<td>Válvula Reductora de Presión</td>
+</tr>
+<tr>
+<td>▭</td>
+<td>TRP</td>
+<td>Tanque Rompe Presión</td>
+</tr>
+<tr>
+<td>⌒</td>
+<td>PE</td>
+<td>Paso Elevado</td>
+</tr>
+</tbody></table>
+<h3>4.2 Detalle de Símbolos</h3>
+<h4>Válvula de Aire (VA)</h4>
+<ul>
+<li>Triángulo filled hacia arriba</li>
+<li>Círculo filled en la punta</li>
+<li>Posición: En la línea de proyecto</li>
+</ul>
+<h4>Válvula de Purga (VP)</h4>
+<ul>
+<li>Triángulo filled hacia abajo</li>
+<li>Línea vertical hacia abajo</li>
+<li>Posición: En la línea de proyecto</li>
+</ul>
+<h4>Válvula Reductora (VRP)</h4>
+<ul>
+<li>Dos triángulos filled enfrentados (corbatín)</li>
+<li>Posición: En la línea de proyecto</li>
+</ul>
+<h4>Tanque Rompe Presión (TRP)</h4>
+<ul>
+<li>Rectángulo filled</li>
+<li>Línea horizontal de nivel de agua</li>
+<li>Posición: En la línea de proyecto</li>
+</ul>
+<h4>Paso Elevado (PE)</h4>
+<ul>
+<li>Arco semicircular</li>
+<li>Dos líneas verticales en extremos</li>
+<li>Posición: Conecta puntos INI y FIN del PE</li>
+</ul>
+<h3>4.3 Numeración Correlativa</h3>
+<p>El sistema asigna automáticamente:</p>
+<ul>
+<li>VA-1, VA-2, VA-3, ...</li>
+<li>VP-1, VP-2, VP-3, ...</li>
+<li>VRP-1, VRP-2, ...</li>
+<li>TRP-1, TRP-2, ...</li>
+<li>PE-1, PE-2, ...</li>
+</ul>
+<h3>4.4 Tabla Resumen de Accesorios</h3>
+<p>Se genera automáticamente a la izquierda del perfil:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>N°</td>
+<td>Número correlativo</td>
+</tr>
+<tr>
+<td>ACCESORIO</td>
+<td>Tipo (VA-1, VP-1, etc.)</td>
+</tr>
+<tr>
+<td>ABSCISA</td>
+<td>Ubicación en metros</td>
+</tr>
+<tr>
+<td>COTA</td>
+<td>Cota de terreno</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. Configuración de Dibujo</h2>
+<h3>5.1 Hoja "DibujoAcad"</h3>
+<p>Todos los parámetros de dibujo se configuran en esta hoja.</p>
+<h4>5.1.1 Escalas</h4>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Parámetro</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EscalaHor</td>
+<td>Escala horizontal (ej: 1000)</td>
+</tr>
+<tr>
+<td>EscalaVert</td>
+<td>Escala vertical (ej: 100)</td>
+</tr>
+</tbody></table>
+<h4>5.1.2 Capas</h4>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Parámetro</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NombreLayer</td>
+<td>Capa principal de perfiles</td>
+</tr>
+<tr>
+<td>ColorLinea</td>
+<td>Color de las líneas (1-255)</td>
+</tr>
+<tr>
+<td>AnchoLinea1</td>
+<td>Grosor de línea</td>
+</tr>
+</tbody></table>
+<h4>5.1.3 Textos</h4>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Parámetro</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Taltotexto</td>
+<td>Altura del texto</td>
+</tr>
+<tr>
+<td>TEstiloTexto</td>
+<td>Nombre del estilo</td>
+</tr>
+<tr>
+<td>Tcolorlinea</td>
+<td>Color del texto</td>
+</tr>
+</tbody></table>
+<h4>5.1.4 Guitarra</h4>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Parámetro</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPasoHorizontal</td>
+<td>Intervalo entre verticales</td>
+</tr>
+<tr>
+<td>GPasoVertical</td>
+<td>Intervalo entre horizontales</td>
+</tr>
+<tr>
+<td>GFilas</td>
+<td>Número de filas de datos</td>
+</tr>
+<tr>
+<td>GAltoFilas</td>
+<td>Altura de cada fila</td>
+</tr>
+</tbody></table>
+<h3>5.2 Parámetros Adicionales</h3>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PVisPerfil</td>
+<td>"Si" = dibujar perfiles</td>
+</tr>
+<tr>
+<td>PNum</td>
+<td>1=terreno, 2=proyecto, 3=piezo</td>
+</tr>
+<tr>
+<td>Gnum</td>
+<td>Guitarra a dibujar (1-7)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>6. Parámetros de Capas</h2>
+<h3>6.1 Capas Creadas</h3>
+<p>El sistema crea y gestiona las siguientes capas:</p>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Contenido</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LPerfil</td>
+<td>Terreno</td>
+<td>Configurable</td>
+</tr>
+<tr>
+<td>LProyecto</td>
+<td>Tubería</td>
+<td>Configurable</td>
+</tr>
+<tr>
+<td>LPiezometrica</td>
+<td>Línea de carga</td>
+<td>Configurable</td>
+</tr>
+<tr>
+<td>LGuitarra</td>
+<td>Grilla</td>
+<td>Configurable</td>
+</tr>
+<tr>
+<td>LAccesorios</td>
+<td>Símbolos hidráulicos</td>
+<td>3 (rojo)</td>
+</tr>
+<tr>
+<td>LValvulas</td>
+<td>VRP, TRP</td>
+<td>2 (amarillo)</td>
+</tr>
+<tr>
+<td>LTablaResumen</td>
+<td>Tabla de accesorios</td>
+<td>7 (blanco)</td>
+</tr>
+<tr>
+<td>LTextoPasoMayor</td>
+<td>Abscisas grandes</td>
+<td>Configurable</td>
+</tr>
+</tbody></table>
+<h3>6.2 Gestión de Capas</h3>
+<p>El sistema utiliza:</p>
+<pre><code class="language-vba">Sub GestionarCapa(nombreCapa As String, colorIdx As Integer)
+    ' Crea la capa si no existe
+    ' Asigna el color especificado
+    ' Activa la capa para dibujo
+End Sub
+</code></pre>
+<h3>6.3 Anchos de Línea</h3>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Ancho típico</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Perfiles</td>
+<td>0.25 - 0.50 mm</td>
+</tr>
+<tr>
+<td>Grilla</td>
+<td>0.13 - 0.25 mm</td>
+</tr>
+<tr>
+<td>Guitarra</td>
+<td>0.18 mm</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>7. Resolución de Problemas</h2>
+<h3>7.1 AutoCAD No Responde</h3>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>No detecta AutoCAD</td>
+<td>Asegurarse que AutoCAD esté abierto</td>
+</tr>
+<tr>
+<td>Error de COM</td>
+<td>Reiniciar Excel y AutoCAD</td>
+</tr>
+<tr>
+<td>Ventana oculta</td>
+<td>Ejecutar <code>AppActivate</code> manualmente</td>
+</tr>
+</tbody></table>
+<h3>7.2 Elementos No se Dibujan</h3>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sin datos</td>
+<td>Ejecutar <code>DatosFormulas</code> primero</td>
+</tr>
+<tr>
+<td>Escala muy pequeña</td>
+<td>Verificar Eh y Ev en DibujoAcad</td>
+</tr>
+<tr>
+<td>Fuera de límites</td>
+<td>Verificar abscisas y cotas en calculo</td>
+</tr>
+</tbody></table>
+<h3>7.3 Capas No Creadas</h3>
+<p>Verificar que la conexión COM esté activa:</p>
+<pre><code class="language-vba">Set acadApp = GetObject(, "AutoCAD.Application")
+Set acadDoc = acadApp.ActiveDocument
+</code></pre>
+<h3>7.4 Símbolos No Aparecen</h3>
+<p>Verificar:</p>
+<ol>
+<li>Que existan accesorios en las columnas AL o AP</li>
+<li>Que los códigos sean correctos (VA, VP, VRP, TRP)</li>
+<li>Ejecutar <code>DatosFormulas</code> antes de dibujar</li>
+</ol>
+<h3>7.5 Posición Incorrecta</h3>
+<p>Verificar en hoja "calculo":</p>
+<ul>
+<li>Abscisa inicial en I17</li>
+<li>Abscisa final en última fila</li>
+<li>Cotas en columna J (terreno) y P (piezométrica)</li>
+</ul>
+<hr>
+<h2>Optimización de Rendimiento</h2>
+<h3>Modo LISP Batch</h3>
+<p>El sistema puede usar generación LISP en lugar de COM directo:</p>
+<pre><code class="language-vba">' Activar modo LISP
+Call StartLispBatch
+
+' Dibujar elementos
+' ...
+
+' Finalizar y ejecutar
+Call EndAndRunLispBatch
+</code></pre>
+<p>Esto genera un archivo SCR que se ejecuta en AutoCAD de una sola vez, siendo más rápido para muchos elementos.</p>
+<hr>
+<h2>Notas Técnicas</h2>
+<h3>Escalas Típicas</h3>
+<table>
+<thead>
+<tr>
+<th>Proyecto</th>
+<th>Eh</th>
+<th>Ev</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Urbano</td>
+<td>1000</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Rural</td>
+<td>2000</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Detalle</td>
+<td>500</td>
+<td>50</td>
+</tr>
+</tbody></table>
+<h3>Conversión de Coordenadas</h3>
+<pre><code class="language-vba">' X en papel (mm) = (Abscisa - AbscisaInicial) / Eh * 1000
+' Y en papel (mm) = (Cota - CotaDatum) / Ev * 1000
+</code></pre>
+<h3>Datum del Perfil</h3>
+<ul>
+<li><strong>Cota inferior</strong>: Min(cota terreno, cota proyecto) - 10m</li>
+<li><strong>Cota superior</strong>: Max(cota terreno, cota proyecto) + 10m</li>
+</ul>
+<hr>
+<h2>Atajos de Dibujo</h2>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Atajo建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DibujoTotalCAD2026_PRO</td>
+<td>Dibuja todo</td>
+</tr>
+<tr>
+<td>DibujarGuitarrasTotales</td>
+<td>Solo grilla</td>
+</tr>
+<tr>
+<td>DibujarSimbolosISO_Accesorios</td>
+<td>Solo símbolos</td>
+</tr>
+<tr>
+<td>BorrarTodoCAD</td>
+<td>Limpiar dibujo</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>Este documento forma parte del Manual de Usuario del Sistema de Conducciones de Agua</em></p>
+</div>
+                </div>
+            
+                <div id="content-4" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(4)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Accesorios y Elementos Especiales</h1>
+<h2>Índice del Módulo</h2>
+<ol>
+<li><a href="#1-tipos-de-accesorios">Tipos de Accesorios</a></li>
+<li><a href="#2-insertar-accesorios">Insertar Accesorios</a></li>
+<li><a href="#3-v%C3%A1lvulas-autom%C3%A1ticas">Válvulas Automáticas</a></li>
+<li><a href="#4-pasos-elevados">Pasos Elevados</a></li>
+<li><a href="#5-interpolaci%C3%B3n-de-puntos">Interpolación de Puntos</a></li>
+<li><a href="#6-eliminaci%C3%B3n-y-edici%C3%B3n">Eliminación y Edición</a></li>
+</ol>
+<hr>
+<h2>1. Tipos de Accesorios</h2>
+<h3>1.1 Catálogo de Accesorios</h3>
+<p>El sistema soporta los siguientes accesorios hidráulicos:</p>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Nombre</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VA</td>
+<td>Válvula de Aire</td>
+<td>Expulsa aire acumulado en puntos altos</td>
+</tr>
+<tr>
+<td>VP</td>
+<td>Válvula de Purga</td>
+<td>Permite vaciado y limpieza</td>
+</tr>
+<tr>
+<td>VRP</td>
+<td>Válvula Reductora de Presión</td>
+<td>Reduce presión en zonas específicas</td>
+</tr>
+<tr>
+<td>TRP</td>
+<td>Tanque Rompe Presión</td>
+<td>Disipa energía hidráulica</td>
+</tr>
+<tr>
+<td>PE</td>
+<td>Paso Elevado</td>
+<td>Cruza depresiones sin enterrar tubería</td>
+</tr>
+</tbody></table>
+<h3>1.2 Ubicación en Excel</h3>
+<p>Los accesorios se registran en dos columnas:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AL (30)</td>
+<td>Accesorios principales: TRP, VRP, PE</td>
+</tr>
+<tr>
+<td>AP (34)</td>
+<td>Válvulas: VA, VP</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. Insertar Accesorios</h2>
+<h3>2.1 Método 1: Botones de la Ribbon</h3>
+<p>El archivo Excel puede tener botones en la ribbon o en la hoja:</p>
+<ol>
+<li><strong>Posicionarse</strong> en la fila donde se insertará el accesorio</li>
+<li><strong>Hacer clic</strong> en el botón correspondiente:<ul>
+<li>Insertar TRP</li>
+<li>Insertar VRP</li>
+<li>Insertar PE</li>
+</ul>
+</li>
+</ol>
+<h3>2.2 Método 2: Macros VBA</h3>
+<pre><code class="language-vba">' Insertar Tanque Rompe Presión
+Call TanqueRompePresion
+
+' Insertar Válvula Reductora
+Call ValvulaReductoraPresion
+
+' Marcar Paso Elevado (INI/FIN)
+Call PasoElevado
+</code></pre>
+<h3>2.3 Método 3: Entrada Manual</h3>
+<ol>
+<li>Escribir el código en la celda correspondiente:<ul>
+<li>Columna AL: <code>TRP</code>, <code>VRP</code>, <code>PE</code></li>
+<li>Columna AP: <code>VA</code>, <code>VP</code></li>
+</ul>
+</li>
+<li>Ejecutar <code>DatosFormulas</code> para actualizar cálculos</li>
+</ol>
+<h3>2.4 Resultado de la Inserción</h3>
+<p>Cuando se inserta un accesorio, el sistema:</p>
+<table>
+<thead>
+<tr>
+<th>Accesorio</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TRP</td>
+<td>Inserta fila, interpola cota terreno, calcula pendientes</td>
+</tr>
+<tr>
+<td>VRP</td>
+<td>Inserta fila, solicita presión requerida, calcula</td>
+</tr>
+<tr>
+<td>PE-INI</td>
+<td>Marca inicio, no modifica datos</td>
+</tr>
+<tr>
+<td>PE-FIN</td>
+<td>Marca fin, nivela proyecto entre INI y FIN</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>3. Válvulas Automáticas</h2>
+<h3>3.1 Cálculo Automático</h3>
+<p>El sistema calcula automáticamente dónde colocar válvulas según cambios de pendiente:</p>
+<table>
+<thead>
+<tr>
+<th>Válvula</th>
+<th>Condición</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VA</td>
+<td>Cambio de pendiente positivo (subida) + desnivel mínimo + distancia</td>
+</tr>
+<tr>
+<td>VP</td>
+<td>Cambio de pendiente negativo (bajada) + desnivel mínimo + distancia</td>
+</tr>
+</tbody></table>
+<h3>3.2 Parámetros de Activación</h3>
+<p>Los parámetros se configuran en celdas con nombre:</p>
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripción</th>
+<th>Típico</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DesMinVA</td>
+<td>Desnivel mínimo para activar</td>
+<td>3.0 m</td>
+</tr>
+<tr>
+<td>DminVA</td>
+<td>Distancia mínima entre válvulas</td>
+<td>100 m</td>
+</tr>
+</tbody></table>
+<h3>3.3 Fórmulas de Detección</h3>
+<pre><code class="language-excel">' Válvula de Aire (columna AM)
+=SI(Y(Q18&gt;=0; Q19&lt;0; ABS(P18-P17)&gt;=DesMinVA; (I18-BT17)&gt;=DminVA); 1; "")
+
+' Válvula de Purga (columna AO)
+=SI(Y(Q18&lt;0; Q19&gt;=0; ABS(P18-P17)&gt;=DesMinVA; (I18-BU17)&gt;=100); 1; "")
+</code></pre>
+<h3>3.4 Columnas de Memoria</h3>
+<p>El sistema usa columnas ocultas para rastrear la última válvula:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BT</td>
+<td>Última abscisa de VA</td>
+</tr>
+<tr>
+<td>BU</td>
+<td>Última abscisa de VP</td>
+</tr>
+</tbody></table>
+<h3>3.5 Limpiar Válvulas Automáticas</h3>
+<p>Para eliminar las válvulas calculadas automáticamente:</p>
+<pre><code class="language-vba">Sub LimpiarVAlvulasVA_VP()
+    ' Elimina VA y VP calculados
+    ' Preserva TRP, VRP y PE
+End Sub
+</code></pre>
+<hr>
+<h2>4. Pasos Elevados</h2>
+<h3>4.1 Concepto</h3>
+<p>Un paso elevado (PE) permite cruzar una depresión (valle, quebrada) sin enterrar la tubería, manteniéndola a una altura fija sobre el terreno.</p>
+<h3>4.2 Marcaje de PE</h3>
+<p>El sistema utiliza un sistema de pares (INI/FIN):</p>
+<pre><code>Fila X:   PE-1 INI    ← Punto inicial
+Fila Y:   PE-1 FIN    ← Punto final
+</code></pre>
+<h3>4.3 Proceso de Creación</h3>
+<p><strong>Paso 1: Marcar INICIO</strong></p>
+<ol>
+<li>Posicionarse en la fila donde comienza el paso elevado</li>
+<li>Ejecutar macro <code>PasoElevado</code></li>
+<li>El sistema marca <code>PE-1 INI</code></li>
+</ol>
+<p><strong>Paso 2: Marcar FINAL</strong></p>
+<ol>
+<li>Posicionarse en la fila donde termina el paso elevado</li>
+<li>Ejecutar macro <code>PasoElevado</code></li>
+<li>El sistema marca <code>PE-1 FIN</code> y "aplana" el proyecto</li>
+</ol>
+<h3>4.4 Efecto del PE</h3>
+<p>Al marcar el punto FIN:</p>
+<ol>
+<li><strong>Limpia la columna N (Cota Proyecto)</strong> entre INI y FIN</li>
+<li><strong>Fuerza recalculo de fórmulas</strong> de forma relativa</li>
+<li><strong>Resultado</strong>: La línea de proyecto se vuelve horizontal entre los dos puntos</li>
+</ol>
+<h3>4.5 Terreno Intocable</h3>
+<p><strong>Importante</strong>: En los pasos elevados, el terreno (columna J) NO se modifica. Solo se ajusta la línea de proyecto para mantener la tubería sobre el terreno.</p>
+<h3>4.6 Numeración Múltiple</h3>
+<p>El sistema soporta múltiples pasos elevados:</p>
+<ul>
+<li>PE-1 INI / PE-1 FIN</li>
+<li>PE-2 INI / PE-2 FIN</li>
+<li>PE-3 INI / PE-3 FIN</li>
+</ul>
+<hr>
+<h2>5. Interpolación de Puntos</h2>
+<h3>5.1 Interpolación Automática</h3>
+<p>El sistema puede insertar nuevos puntos interpolados en cualquier abscisa:</p>
+<pre><code class="language-vba">Sub InterpolarManual()
+    ' Solicita:
+    ' 1. Abscisa del nuevo punto
+    ' 2. Nombre/TAG del punto
+End Sub
+</code></pre>
+<h3>5.2 Funcionamiento</h3>
+<ol>
+<li>Solicita la abscisa a interpolar</li>
+<li>Solicita el nombre (ej: VT-1, CRP-2)</li>
+<li>Busca el tramo donde cae la abscisa</li>
+<li>Inserta una nueva fila</li>
+<li>Interpola la cota de terreno</li>
+<li>Copia las fórmulas del tramo</li>
+<li>Aplica formato y recalcula</li>
+</ol>
+<h3>5.3 Fórmula de Interpolación</h3>
+<pre><code class="language-excel">' Interpolación lineal
+Cota = y1 + (x - x1) × (y2 - y1) / (x2 - x1)
+</code></pre>
+<h3>5.4 Motor de Interpolación</h3>
+<p>La función principal es <code>InterpolarNuevaFilaAccesorio</code>:</p>
+<pre><code class="language-vba">Public Sub InterpolarNuevaFilaAccesorio(absObj As Double, tagObj As String)
+    ' 1. Carga silenciosa de abscisas (diccionario)
+    ' 2. Match directo (O(1))
+    ' 3. Inserción en rango (si corresponde)
+    ' 4. Append al final (si está después del último punto)
+End Sub
+</code></pre>
+<hr>
+<h2>6. Eliminación y Edición</h2>
+<h3>6.1 Eliminar Accesorios</h3>
+<p>Para eliminar un accesorio:</p>
+<pre><code class="language-vba">Sub EliminarValvulasoTanques()
+    ' Elimina la fila del accesorio
+    ' Restaura continuidad de fórmulas
+    ' Recalcula pendientes
+End Sub
+</code></pre>
+<h3>6.2 Proceso de Eliminación</h3>
+<ol>
+<li><strong>Confirmar</strong> eliminación con mensaje</li>
+<li><strong>Eliminar</strong> la fila completa</li>
+<li><strong>Copiar fórmulas</strong> de la fila anterior a la siguiente</li>
+<li><strong>Recalcular</strong> pendientes hidráulicas</li>
+</ol>
+<h3>6.3 Validaciones</h3>
+<p>El sistema no permite eliminar:</p>
+<ul>
+<li>Cabecera inicial (filas 1-16)</li>
+<li>Primera fila de datos (fila 17)</li>
+<li>Última fila de la conducción</li>
+</ul>
+<h3>6.4 Editar Manualmente</h3>
+<p>Para editar directamente:</p>
+<ol>
+<li>Cambiar el código en columna AL o AP</li>
+<li>Ejecutar <code>DatosFormulas</code> para actualizar</li>
+</ol>
+<hr>
+<h2>Formato Visual de Accesorios</h2>
+<h3>Negrita y Color</h3>
+<p>El sistema aplica formato automático:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Formato</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VA</td>
+<td>Negrita, color azul oscuro (RGB 0,32,96)</td>
+</tr>
+<tr>
+<td>VP</td>
+<td>Negrita, color azul oscuro</td>
+</tr>
+<tr>
+<td>TRP</td>
+<td>Negrita, color azul oscuro</td>
+</tr>
+<tr>
+<td>VRP</td>
+<td>Negrita, color azul oscuro</td>
+</tr>
+<tr>
+<td>PE-*</td>
+<td>Negrita, color azul oscuro</td>
+</tr>
+</tbody></table>
+<h3>Macro de Formato</h3>
+<pre><code class="language-vba">Sub DarFormatoAccesorios()
+    ' Escanea columna AP
+    ' Aplica negrita y color a VA, VP, VRP, TRP, PE
+End Sub
+</code></pre>
+<hr>
+<h2>Resumen de Accesorios</h2>
+<h3>ResumenCalculo</h3>
+<p>Genera una tabla con todos los accesorios:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BA</td>
+<td>N° correlativo</td>
+</tr>
+<tr>
+<td>BB</td>
+<td>Abscisa</td>
+</tr>
+<tr>
+<td>BC</td>
+<td>Cota Terreno</td>
+</tr>
+<tr>
+<td>BD</td>
+<td>Cota Piezométrica</td>
+</tr>
+<tr>
+<td>BE</td>
+<td>Presión</td>
+</tr>
+<tr>
+<td>BF</td>
+<td>Etiqueta (VA-1, VP-1, etc.)</td>
+</tr>
+</tbody></table>
+<h3>Contadores</h3>
+<p>El sistema lleva registro de cantidades:</p>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BD5</td>
+<td>Cantidad de VA</td>
+</tr>
+<tr>
+<td>BD6</td>
+<td>Cantidad de VP</td>
+</tr>
+<tr>
+<td>BD7</td>
+<td>Cantidad de TRP</td>
+</tr>
+<tr>
+<td>BD8</td>
+<td>Cantidad de VRP</td>
+</tr>
+<tr>
+<td>BD9</td>
+<td>Cantidad de PE</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Casos de Uso</h2>
+<h3>Caso 1: Insertar TRP</h3>
+<ol>
+<li>Ir a la fila donde se necesite el TRP</li>
+<li>Clic en botón "Insertar TRP" o ejecutar <code>TanqueRompePresion</code></li>
+<li>El sistema inserta la fila y calcula</li>
+</ol>
+<h3>Caso 2: Crear PE</h3>
+<ol>
+<li>Ir a la fila inicial del paso elevado</li>
+<li>Ejecutar <code>PasoElevado</code> → marca INI</li>
+<li>Ir a la fila final del paso elevado</li>
+<li>Ejecutar <code>PasoElevado</code> → marca FIN y aplana</li>
+</ol>
+<h3>Caso 3: Agregar VT manual</h3>
+<ol>
+<li>Ejecutar <code>InterpolarManual</code></li>
+<li>Ingresar abscisa: 1250.50</li>
+<li>Ingresar nombre: VT-101</li>
+<li>Sistema interpolation y marca el punto</li>
+</ol>
+<hr>
+<h2>Notas Importantes</h2>
+<h3>Orden de Operaciones</h3>
+<ol>
+<li>Primero: Datos de perfil (exportar desde Civil 3D)</li>
+<li>Segundo: Parámetros de diseño (caudal, diámetro)</li>
+<li>Tercero: Ejecutar <code>DatosFormulas</code></li>
+<li>Cuarto: Insertar accesorios si es necesario</li>
+<li>Quinto: Ejecutar <code>ResumenTotal</code></li>
+</ol>
+<h3>Preservación de Datos</h3>
+<ul>
+<li><strong>No eliminar filas</strong> de la zona de datos manualmente</li>
+<li><strong>No modificar</strong> la estructura de columnas</li>
+<li><strong>Usar siempre las macros</strong> para insercciones/eliminaciones</li>
+</ul>
+<hr>
+<p><em>Este documento forma parte del Manual de Usuario del Sistema de Conducciones de Agua</em></p>
+</div>
+                </div>
+            
+                <div id="content-5" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(5)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Catálogo Completo de Macros y Funciones - Sistema de Conducciones</h1>
+<h2>Índice</h2>
+<ol>
+<li><a href="#1-m%C3%B3dulo-c%C3%A1lculos-hidr%C3%A1ulicos-rutina_calculos_2026">Módulo Cálculos Hidráulicos (Rutina_Calculos_2026)</a></li>
+<li><a href="#2-m%C3%B3dulo-dibujo-en-autocad-rutina_dibujo_2026">Módulo Dibujo en AutoCAD (Rutina_Dibujo_2026)</a></li>
+<li><a href="#3-m%C3%B3dulo-funciones-matem%C3%A1ticas-udf">Módulo Funciones Matemáticas (UDF)</a></li>
+<li><a href="#4-m%C3%B3dulo-exportaci%C3%B3n-lisp-1_excelcellsp">Módulo Exportación LISP (1_ExportExcel.lsp)</a></li>
+</ol>
+<hr>
+<h2>1. Módulo Cálculos Hidráulicos (Rutina_Calculos_2026.vba)</h2>
+<h3>1.1 Subrutinas Principales</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Subrutina</th>
+<th>Función Principal</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>PendienteCalculada</code></td>
+<td>Cálculo de Pendientes</td>
+<td>Calcula la pendiente hidráulica y geométrica entre nodos. Optimizado para procesar datos en memoria (arrays), lo que lo hace extremadamente rápido. Recorre la hoja buscando cambios de proyecto en columna N y calcula pendientes ponderadas para toda la conducción.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>InterPol</code></td>
+<td>Aplicar Interpolación</td>
+<td>Inserta una fórmula de interpolación lineal en la celda activa basada en los valores vecinos (utilizado para perfiles y cotas interpoladas). Formula: <code>=+interpolar(R[-1]C[-1],R[-1]C,R[1]C[-1],R[1]C,RC[-1])</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>TanqueRompePresion</code></td>
+<td>Insertar Tanque TRP</td>
+<td>Inserta una fila para un Tanque Rompe Presión (TRP), interpola la cota de terreno y reinicia la presión estática a cero en ese punto. Copia fórmulas del nodo anterior y marca como "TRP" en columnas AL y AP.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>ValvulaReductoraPresion</code></td>
+<td>Insertar Válvula VRP</td>
+<td>Inserta una fila para una Válvula Reductora de Presión (VRP), solicita la presión requerida mediante InputBox y recalcula la línea piezométrica a partir de ese nodo.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>PasoElevado</code></td>
+<td>Marcar Paso Elevado</td>
+<td>Configura un nodo como PE (Paso Elevado) en pares INI/FIN. El primer click marca "PE-X INI", el segundo marca "PE-X FIN" y "aplana" la línea de proyecto entre ambos puntos, interpolando una línea horizontal.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>mensaje</code></td>
+<td>Validar Créditos</td>
+<td>Subrutina de control que verifica que la celda A16 contenga el texto "CREDITOS: Ing. Patricio Sarmiento Reinoso" como validación de autoría.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>DatosFormulas</code></td>
+<td>Motor de Cálculo</td>
+<td><strong>SUBRUTINA PRINCIPAL</strong>. Ejecuta el cálculo hidráulico completo aplicando fórmulas de velocidad, pérdidas de carga (Hazen-Williams) y presiones en bloque a toda la hoja. Incluye limpieza de zonas, aplicación de fórmulas por columnas, detección automática de VA/VP, formateo y resúmenes.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>FormulasPline</code></td>
+<td>Exportar a AutoCAD</td>
+<td>Genera las cadenas de comandos PLINE para dibujar automáticamente el terreno (Columna I,J), la tubería (Columna I,P) y la piezométrica (Columna I,AJ) en AutoCAD. Escribe en columnas CN a CU.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>AguaDatosDatPerfil</code></td>
+<td>Consolidar Perfil</td>
+<td>Copia y organiza todos los resultados de cálculo desde la hoja "calculo" hacia la hoja "PERFIL" para su visualización y posterior dibujo técnico. Copia rango H17:AL y AP17:AP.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>MaxMinCalculo</code></td>
+<td>Estadísticas Globales</td>
+<td>Determina las elevaciones máximas/mínimas del terreno, proyecto y piezométrica, además de calcular la longitud total de la conducción y longitud inclinada total. Guarda estos valores en celdas S2-S7 y W2-W3 para configurar escalas del gráfico.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>ResumenCalculo</code></td>
+<td>Resumen de Accesorios</td>
+<td>Escanea la conducción (columnas AL y AP) y genera una tabla con la ubicación (abscisa, cota), tipo y numeración correlativa de todas las válvulas (VA, VP), tanques (TRP), válvulas reductoras (VRP) y pasos elevados (PE). Escribe en columnas BA:BF.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>Resumen3Calculo</code></td>
+<td>Resumen de Materiales</td>
+<td>Identifica los cambios de diámetro (Columna U) o caudal (Columna S) y calcula las longitudes de tubería por cada tramo específico. Genera descripción integrada "L= Xm DN=Ymm V=Z Q=W PN=N Serie=S". Escribe en columnas BZ:CL.</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>ResumenTotal</code></td>
+<td>Ejecutar Procesos</td>
+<td>Subrutina maestra que llama secuencialmente a Resumen3Calculo, ResumenCalculo y PendienteCalculada para ejecutar todos los resúmenes finales de forma coordinada.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>DarFormatoAccesorios</code></td>
+<td>Formato Visual</td>
+<td>Aplica formato visual (negrita y color azul oscuro RGB 0,32,96) a las celdas de la columna AP que contengan etiquetas de accesorios (VA, VP, TRP, VRP, PE).</td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>EliminarValvulasoTanques</code></td>
+<td>Eliminar Accesorio</td>
+<td>Elimina la fila del accesorio seleccionado, restaura la continuidad de fórmulas hidráulicas copiando desde la fila anterior y recalcula las pendientes. Validaciones: no elimina cabecera (filas &lt;18) ni última fila.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>CopiarDatosPerfil</code></td>
+<td>Importar Topografía</td>
+<td>Copia datos de topografía desde la hoja "Perfil Técnico" hacia la hoja "calculo" (columnas H, I, J). Lee desde fila 5 del Perfil Técnico.</td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>LanzarFormulario</code></td>
+<td>Abrir Panel de Control</td>
+<td>Abre el formulario VBA "frmControl_CA" que serve como interfaz gráfica para ejecutar las principales operaciones del sistema.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>InterpolarNuevaFilaAccesorio</code></td>
+<td>Motor de Interpolación</td>
+<td>Función avanzada de interpolación que: (1) carga abscisas en diccionario para búsqueda O(1), (2) busca coincidencia exacta, (3) inserta nueva fila si el punto está en rango, (4) calcula cota interpolada y (5) copia fórmulas del segmento.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>InterpolarManual</code></td>
+<td>Interpolación Usuario</td>
+<td>Solicita al usuario la abscisa y nombre del punto a interpolar, luego ejecuta InterpolarNuevaFilaAccesorio y recalcula todo el sistema.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>LimpiarVAlvulasVA_VP</code></td>
+<td>Limpiar Válvulas</td>
+<td>Elimina todas las válvulas automáticas (VA/VP) calculadas por el sistema, preservando los accesorios manuales (TRP, VRP, PE). Limpia columnas AM:AO y AP.</td>
+</tr>
+</tbody></table>
+<h3>1.2 Funciones de Cálculo (UDF)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Función</th>
+<th>Parámetros</th>
+<th>Propósito Técnico</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>calculav(Q, di)</code></td>
+<td>Caudal (l/s), Diámetro (mm)</td>
+<td>Calcula la velocidad real del flujo usando la fórmula V = Q/A. Convierte Q de l/s a m³/s y calcula área con di en metros. Retorna m/s.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>LongInc(c1, c2, DH)</code></td>
+<td>Cota1, Cota2, Distancia Horizontal</td>
+<td>Calcula la Longitud Inclinada real de la tubería entre nodos considerando la diferencia de cotas. Fórmula: √((c1-c2)² + DH²)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>PerdidaCarga(Q, L, C, D)</code></td>
+<td>Caudal, Longitud, Coef. C, Diámetro</td>
+<td>Calcula la pérdida por fricción usando la ecuación de Hazen-Williams completa: hf = 10.67 × L × Q^1.852 / (C^1.852 × D^4.87). Convierte Q a m³/s y D a metros.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>Interpolar(x1, y1, x2, y2, x)</code></td>
+<td>Coord. X1,X2, Y1,Y2, X interpolado</td>
+<td>Realiza interpolaciones lineales exactas para cotas de terreno o piezométricas. Fórmula: y = y1 + (x-x1) × (y2-y1)/(x2-x1). Maneja división por cero.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>pendiente1(x1, y1, x2, y2)</code></td>
+<td>Coordenadas 2D</td>
+<td>Calcula la pendiente porcentual entre dos puntos: (y1-y2)×100/(x1-x2). Retorna valor absoluto con signo según dirección.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>SexToRad(grados)</code></td>
+<td>Ángulo sexagesimal</td>
+<td>Convierte ángulos en grados sexagesimales a radianes para funciones trigonométricas de VBA. Factor: π/180.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>Nz(Valor)</code></td>
+<td>Valor variante</td>
+<td>Función de seguridad que trata celdas vacías o no numéricas como cero, evitando errores #¡VALOR! en cálculos.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. Módulo Dibujo en AutoCAD (Rutina_Dibujo_2026.vba)</h2>
+<h3>2.1 Subrutinas de Inicialización y Configuración</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Subrutina</th>
+<th>Función Principal</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>InicializarEntorno</code></td>
+<td>Conexión AutoCAD</td>
+<td>El "Motor" del script de dibujo. Establece conexión COM con AutoCAD (GetObject o CreateObject), identifica las hojas "DibujoAcad" y "calculo", captura automáticamente las escalas (EhGlobal, EvGlobal) y calcula los límites de dibujo (xIniGlobal, xFinGlobal, yInfGlobal, ySupGlobal) determinando el datum del perfil.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>CargarCacheConfig</code></td>
+<td>Cargar Parámetros</td>
+<td>Lee todos los parámetros de dibujo desde la hoja "DibujoAcad" y los almacena en la estructura cfg (tipo AutoCADConfig) para acceso rápido durante el dibujo. Incluye escalas, capas, colores, textos, guitarra y símbolos.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>GestionarCapa</code></td>
+<td>Crear/Gestionar Capas</td>
+<td>Crea capas en AutoCAD si no existen, les asigna color y nombre, y las activa como capa actual de dibujo. Verifica si la capa ya existe antes de crearla para evitar errores.</td>
+</tr>
+</tbody></table>
+<h3>2.2 Subrutinas de Dibujo de Perfiles</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Subrutina</th>
+<th>Función Principal</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4</td>
+<td><code>DibujarTerreno</code></td>
+<td>Perfil Terreno</td>
+<td>Dibuja la polilínea del terreno natural usando datos de la Columna J (Cota Terreno). Utiliza la macro auxiliar DibujarPerfilGenerico con colElev=10. Aplica capa configurable desde DibujoAcad.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>DibujarProyecto</code></td>
+<td>Perfil Tubería</td>
+<td>Dibuja la polilínea que representa la tubería (Proyecto) usando datos de la Columna P (Piezométrica - proyecto). Utiliza colElev=16. Crea/gestiona capa "LProyecto".</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>DibujarPiezometrica</code></td>
+<td>Línea de Gradiente</td>
+<td>Dibuja la línea de gradiente hidráulico usando datos de la Columna AJ (Piezométrica real). Capa "LPiezometrica", típicamente color azul claro (150).</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>DibujarPerfilGenerico</code></td>
+<td>Lógica de Polilíneas</td>
+<td><strong>FUNCIÓN CORE DE DIBUJO</strong>. Transforma coordenadas de metros a unidades CAD usando las escalas EhGlobal y EvGlobal, filtra cotas válidas (&gt;0 y dentro del rango), y crea polilíneas "Lightweight" en AutoCAD para optimizar peso del archivo. Soporta modo LISP Batch.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>DibujarPerfilesTotales</code></td>
+<td>Dibujo Secuencial</td>
+<td>Orchestral el dibujo de los tres perfiles (terreno, proyecto, piezométrica) de forma secuencial, verificando la configuración de visibilidad en la hoja DibujoAcad (PVisPerfil).</td>
+</tr>
+</tbody></table>
+<h3>2.3 Subrutinas de Guitarra (Grilla)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Subrutina</th>
+<th>Función Principal</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9</td>
+<td><code>DibujarGuitarrasTotales</code></td>
+<td>Orchestral de Grillas</td>
+<td>Itera por los 7 tipos de guitarra (contorno, superior, inferior, títulos, PIs, datos horizontales, marcas) ejecutando cada una secuencialmente. Usa el valor de Gnum en DibujoAcad.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>GuitarraContorno</code></td>
+<td>Marco Exterior</td>
+<td>Dibuja el rectángulo exterior que delimita toda la zona del perfil longitudinal. Ancho = (xFin-xIni)/EscalaH, Alto = (ySup-yInf)/EscalaV. Color configurable (cfg.GColor).</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>GuitarraSuperior</code></td>
+<td>Grilla Vertical</td>
+<td>Dibuja las líneas verticales de la cuadrícula según el intervalo definido en GPasoVertical (celda de configuración). Detecta si GPasoMayor está activo para usar paso mayor.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>GuitarraInferior</code></td>
+<td>Grilla Horizontal</td>
+<td>Dibuja las líneas horizontales (bandas de cota) según el intervalo de GPasoHorizontal. Dibuja N number de filas (GFilas) con altura configurable (GAltoFilas).</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>GuitarraTitulos</code></td>
+<td>Títulos de Columnas</td>
+<td>Dibuja los cuadros de títulos a la izquierda del perfil, en la zona de separación de la guitarra. Utiliza	cfg.GColTitulos para color diferenciado.</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>GuitarraPIs</code></td>
+<td>Verticales de PIs</td>
+<td>Dibuja líneas verticales desde cada punto de inflexión (accesorios en columnas AL/AP) hasta la base del cuadro (fila 5 de la guitarra). Permite identificar visualmente cada estación de accesorio.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>GuitarraDatosH</code></td>
+<td>Verticales de Tabla</td>
+<td>Dibuja las líneas verticales en la zona de la tabla de datos hidráulicos (debajo del perfil), según el paso horizontal definido.</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>GuitarraMarcas</code></td>
+<td>Ticks Laterales</td>
+<td>Dibuja las marcas (ticks) en los bordes izquierdo y derecho de la grilla según GPasoVertical. Soporta posición "Izquierda", "Derecha" o "Ambos".</td>
+</tr>
+</tbody></table>
+<h3>2.4 Subrutinas de Accesorios y Símbolos</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Subrutina</th>
+<th>Función Principal</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>17</td>
+<td><code>DibujarSimbolosISO_Accesorios</code></td>
+<td>Símbolos ISO</td>
+<td><strong>SUBRUTINA PRINCIPAL DE SÍMBOLOS</strong>. Escanea la hoja "calculo" buscando accesorios en columnas AL (TRP,VRP,PE) y AP (VA,VP). Dibuja símbolos ISO específicos para cada tipo, aplica numeración correlativa (VA-1, VP-1, etc.), y genera tabla resumen de accesorios a la izquierda del perfil.</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>SymISO_VA</code></td>
+<td>Símbolo Válvula Aire</td>
+<td>Dibuja símbolo ISO de Válvula de Aire: triángulo filled hacia arriba + círculo filled en la punta. Usa polilínea cerrada + hatch sólido. Color configurable.</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>SymISO_VP</code></td>
+<td>Símbolo Válvula Purga</td>
+<td>Dibuja símbolo ISO de Válvula de Purga: triángulo filled invertido + línea vertical hacia abajo + línea horizontal de purga.</td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>SymISO_VRP</code></td>
+<td>Símbolo Válvula Reductora</td>
+<td>Dibuja símbolo ISO de VRP: dos triángulos filled enfrentados (forma de corbatín).</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>SymISO_TRP</code></td>
+<td>Símbolo Tanque TRP</td>
+<td>Dibuja símbolo ISO de Tanque Rompe Presión: rectángulo filled + línea horizontal de nivel de agua.</td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>SymISO_PE</code></td>
+<td>Símbolo Paso Elevado</td>
+<td>Dibuja símbolo ISO de Paso Elevado: arco semicircular + dos líneas verticales en extremos.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>DibujarTablaResumenAccesorios</code></td>
+<td>Tabla Resumen</td>
+<td>Genera la tabla de resumen de accesorios a la izquierda del perfil con columnas: N°, ACCESORIO, ABSCISA, COTA. Utiliza cfg.TCuadroAcces para verificar si está activado.</td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>AplicarHatchSolido</code></td>
+<td>Hatch Sólido</td>
+<td>Función auxiliar que aplica hatch tipo SOLID (relleno sólido) a polilíneas cerradas o círculos para los símbolos ISO.</td>
+</tr>
+</tbody></table>
+<h3>2.5 Subrutinas de Textos y Utilidades</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Subrutina</th>
+<th>Función Principal</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>25</td>
+<td><code>DibujarTextosTotales</code></td>
+<td>Textos del Perfil</td>
+<td>Dibuja todos los textos del perfil: abscisas en la parte inferior, cotas a la izquierda, títulos de columnas, etc. Lee configuración de altura, rotación y desplazamiento desde DibujoAcad.</td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>DibujarTextoTabla</code></td>
+<td>Texto Genérico</td>
+<td>Función genérica para dibujar texto en AutoCAD. Soporta alineación LEFT/CENTER/RIGHT, altura configurable, estilo (crea estilos Arial si no existen), capa y color.</td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>DibujarLinea</code></td>
+<td>Primitiva Básica</td>
+<td>La primitiva más básica de dibujo. Toma dos coordenadas (X1,Y1) y (X2,Y2), más opcionalmente color, y crea una línea simple en el ModelSpace de AutoCAD.</td>
+</tr>
+<tr>
+<td>28</td>
+<td><code>DibujarRectangulo</code></td>
+<td>Primitiva Rectángulo</td>
+<td>Dibuja un rectángulo a partir de dos esquinas opuestas, utilizando la primitiva DibujarLinea 4 veces.</td>
+</tr>
+<tr>
+<td>29</td>
+<td><code>BorrarTodoCAD</code></td>
+<td>Limpieza</td>
+<td><strong>FUNCIÓN CRÍTICA DE PREVENCIÓN</strong>. Elimina todas las capas creadas anteriormente (LPerfil, LProyecto, LPiezometrica, LGuitarra, LAccesorios, LValvulas, LTablaResumen, LTextoPasoMayor) para evitar superposición con nuevos dibujos.</td>
+</tr>
+<tr>
+<td>30</td>
+<td><code>BorrarLayer</code></td>
+<td>Limpieza de Capa</td>
+<td>Recorre el ModelSpace de AutoCAD y borra todas las entidades que pertenecen a una capa específica recibida por nombre. Utilizada por BorrarTodoCAD.</td>
+</tr>
+<tr>
+<td>31</td>
+<td><code>DibujoTotalCAD2026_PRO</code></td>
+<td><strong>PUNTO DE ENTRADA</strong></td>
+<td><strong>MACRO PRINCIPAL DEL MÓDULO</strong>. Orchestral todas las subrutinas en el orden correcto: InicializarEntorno → BorrarTodoCAD → GuitarrasTotales → Textos → Perfiles → Accesorios. Es la macro que el usuario debe ejecutar.</td>
+</tr>
+</tbody></table>
+<h3>2.6 Funciones Auxiliares del Módulo Dibujo</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Función</th>
+<th>Parámetros</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32</td>
+<td><code>AplicarFormatoGuitarra</code></td>
+<td>-</td>
+<td>Aplica formato de capa y ancho de línea a las subrutinas de guitarra usando el caché de configuración (cfg).</td>
+</tr>
+<tr>
+<td>33</td>
+<td><code>DibujarGrillaVertical</code></td>
+<td>-</td>
+<td>Función auxiliar interna que traza las líneas verticales de la cuadrícula.</td>
+</tr>
+<tr>
+<td>34</td>
+<td><code>DibujarGrillaHorizontal</code></td>
+<td>-</td>
+<td>Función auxiliar interna que traza las líneas horizontales de la cuadrícula.</td>
+</tr>
+<tr>
+<td>35</td>
+<td><code>DibujarMarcadorPuntual</code></td>
+<td>-</td>
+<td>Lógica genérica que recorre la hoja de cálculo buscando elementos discretos para dibujar símbolos en coordenadas específicas.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>3. Módulo Funciones Matemáticas (UDF)</h2>
+<h3>Resumen de Funciones Disponibles</h3>
+<table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Función</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hidráulica</td>
+<td><code>calculav(Q, di)</code></td>
+<td>Velocidad del flujo (m/s)</td>
+</tr>
+<tr>
+<td>Hidráulica</td>
+<td><code>PerdidaCarga(Q, L, C, D)</code></td>
+<td>Pérdida Hazen-Williams (m)</td>
+</tr>
+<tr>
+<td>Geometría</td>
+<td><code>LongInc(c1, c2, DH)</code></td>
+<td>Longitud inclinada (m)</td>
+</tr>
+<tr>
+<td>Geometría</td>
+<td><code>pendiente1(x1, y1, x2, y2)</code></td>
+<td>Pendiente porcentual (%)</td>
+</tr>
+<tr>
+<td>Geometría</td>
+<td><code>Interpolar(x1, y1, x2, y2, x)</code></td>
+<td>Interpolación lineal</td>
+</tr>
+<tr>
+<td>Utilidad</td>
+<td><code>SexToRad(grados)</code></td>
+<td>Grados a radianes</td>
+</tr>
+<tr>
+<td>Utilidad</td>
+<td><code>Nz(Valor)</code></td>
+<td>Null safety para celdas</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>4. Módulo Exportación LISP (1_ExportExcel.lsp)</h2>
+<h3>4.1 Funciones Principales de AutoLISP</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Función</th>
+<th>Descripción Técnica</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>get-perfil-pro-dir</code></td>
+<td>Localiza automáticamente la carpeta donde están los scripts (1_ExportExcel.lsp y 1_procesar_perfil.py). Busca en registro de Windows (HKCU\Software\Antigravity\PerfilPro), en la ruta del dibujo actual, o en SupportPath de AutoCAD. Guarda la ruta para uso futuro.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>round-station</code></td>
+<td>Redondea valores de estación a 4 decimales para evitar errores de coma flotante en comparaciones.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>station-in-pts</code></td>
+<td>Verifica si una estación ya existe en la lista de puntos con tolerancia de 0.02m para evitar duplicados.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>get-prop-dual</code></td>
+<td>Función auxiliar que intenta leer una propiedad de un objeto probando dos nombres alternativos (ej: 'Station vs 'Easting). Útil para compatibilidad entre versiones de Civil 3D.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>extraer-phi</code></td>
+<td><strong>FUNCIÓN CLAVE DE EXTRACCIÓN</strong>. Extrae los Puntos de Inflexión (PHIs) del alineamiento horizontal usando hasta 4 métodos: (M1) GetPICollection API, (M2) Colección Entities con StartingStation/EndingStation, (M3) PassThroughPoint + StationAndOffset, (M4) Uniones entre segmentos. Retorna lista con estaciones y etiquetas (PHi-1, PHi-2...).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>extraer-pvi</code></td>
+<td>Extrae los Puntos de Inflexión Vertical (PVIs) del perfil vertical. Excluye el primer y último PVI (que corresponden a INICIO/FIN). Numeración correlativa: PVi-1, PVi-2...</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>get-coords</code></td>
+<td>Función auxiliar de compatibilidad que obtiene las coordenadas UTM (Este, Norte) en una estación específica del alineamiento usando StationAndOffset. Maneja errores de versiones antiguas de Civil 3D.</td>
+</tr>
+</tbody></table>
+<h3>4.2 Comando Principal</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Comando</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8</td>
+<td><code>C:PERFIL_PRO</code></td>
+<td><strong>COMANDO PRINCIPAL DE EXPORTACIÓN</strong>. Secuencia: (1) Solicita seleccionar Alineamiento Horizontal, (2) Solicita seleccionar Perfil Vertical, (3) Muestra diálogo de configuración (intervalo, profundidad, opciones PHI/PVI/extremos), (4) Extrae datos del perfil y genera CSV temporal, (5) Ejecuta Python para formatear, (6) Copia datos al portapapeles y abre Excel.</td>
+</tr>
+</tbody></table>
+<h3>4.3 Comando de Diagnóstico</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Comando</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9</td>
+<td><code>C:DIAG_SEG</code></td>
+<td>Comando de diagnóstico que imprime propiedades de cada segmento del alineamiento seleccionado. Útil para verificar qué nombres de propiedad expone la versión específica de Civil 3D y debuggear problemas de extracción de PHIs.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. Resumen de Integración entre Módulos</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                         FLUJO DE DATOS COMPLETO                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1_ExportExcel.lsp (AutoCAD Civil 3D)                                       │
+│       │                                                                     │
+│       ├── PERFIL_PRO → Extrae datos de Civil 3D                            │
+│       │                          ↓                                          │
+│       └── 1_procesar_perfil.py → Genera CSV                               │
+│                                        ↓                                    │
+│  Excel (CONDUCCION 2026 ok.xlsm)                                           │
+│       │                                                                     │
+│       ├── Rutina_Calculos_2026.vba                                         │
+│       │       │                                                             │
+│       │       ├── DatosFormulas → Cálculo hidráulico completo             │
+│       │       │       ├── PendienteCalculada                               │
+│       │       │       ├── Funciones UDF (calculav, PerdidaCarga, etc.)    │
+│       │       │       ├── ResumenCalculo (accesorios)                     │
+│       │       │       └── Resumen3Calculo (tramos)                         │
+│       │       │                                                             │
+│       │       └── FormulasPline → Genera comandos PLINE para CAD           │
+│       │                                                                     │
+│       └── Rutina_Dibujo_2026.vba                                           │
+│               │                                                             │
+│               └── DibujoTotalCAD2026_PRO → Dibujo completo en AutoCAD      │
+│                       ├── InicializarEntorno                               │
+│                       ├── BorrarTodoCAD                                     │
+│                       ├── DibujarGuitarrasTotales                          │
+│                       ├── DibujarTextosTotales                              │
+│                       ├── DibujarPerfilesTotales                            │
+│                       └── DibujarSimbolosISO_Accesorios                    │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2>6. Referencias de Columnas Excel</h2>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Letra</th>
+<th>Contenido Principal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>Abscisa</td>
+<td>Distancia acumulada (m)</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Terreno</td>
+<td>Cota del terreno natural (m)</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Cota Terreno</td>
+<td>Cota terreno (dup)</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Proyecto</td>
+<td>Cota de la tubería (m)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Pendiente</td>
+<td>Pendiente del terreno (%)</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Piezométrica</td>
+<td>Línea de carga (m)</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Presión</td>
+<td>Presión disponible (mca)</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Caudal</td>
+<td>Caudal de diseño (l/s)</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Diámetro</td>
+<td>Diámetro interior (mm)</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>Accesorio</td>
+<td>TRP, VRP, PE</td>
+</tr>
+<tr>
+<td>AP</td>
+<td>Anotaciones</td>
+<td>VA, VP, comentarios</td>
+</tr>
+<tr>
+<td>AJ</td>
+<td>Piezométrica Real</td>
+<td>Cota piezométrica calculada</td>
+</tr>
+<tr>
+<td>CN-CU</td>
+<td>PLINE</td>
+<td>Comandos AutoCAD</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>Documento generado para el Manual de Usuario del Sistema de Conducciones de Agua - Abril 2026</em></p>
+</div>
+                </div>
+            
+                <div id="content-6" class="tab-content hidden animate-fade-in theme-executive">
+                    <button onclick="copyToClipboard(6)" class="copy-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar al Portapapeles
+                    </button>
+                    <div class="content-body"><h1>Manual de Usuario - Sistema de Conducciones de Agua PRO</h1>
+<h2>Índice General</h2>
+<ol>
+<li><a href="#1-introducci%C3%B3n-y-flujo-de-trabajo">Introducción y Flujo de Trabajo</a></li>
+<li><a href="#2-exportaci%C3%B3n-desde-autocad-civil-3d">Exportación desde AutoCAD Civil 3D</a></li>
+<li><a href="#3-c%C3%A1lculos-hidr%C3%A1ulicos-en-excel">Cálculos Hidráulicos en Excel</a></li>
+<li><a href="#4-dibujo-en-autocad---perfil-longitudinal">Dibujo en AutoCAD - Perfil Longitudinal</a></li>
+<li><a href="#5-dibujo-en-autocad---planta">Dibujo en AutoCAD - Planta</a></li>
+<li><a href="#6-an%C3%A1lisis-de-transitorios-golpe-de-ariete">Análisis de Transitorios (Golpe de Ariete)</a></li>
+<li><a href="#7-exportaci%C3%B3n-allievi">Exportación Allievi</a></li>
+<li><a href="#8-accesorios-y-elementos-especiales">Accesorios y Elementos Especiales</a></li>
+<li><a href="#9-configuraci%C3%B3n-de-par%C3%A1metros">Configuración de Parámetros</a></li>
+<li><a href="#10-interfaces-de-usuario-dashboards">Interfaces de Usuario (Dashboards)</a></li>
+<li><a href="#11-cat%C3%A1logo-de-macros-y-funciones">Catálogo de Macros y Funciones</a></li>
+<li><a href="#12-m%C3%B3dulos-futuros-propuestos">Módulos Futuros Propuestos</a></li>
+</ol>
+<hr>
+<h2>1. Introducción y Flujo de Trabajo</h2>
+<h3>1.1 Descripción del Sistema</h3>
+<p>El <strong>Sistema de Conducciones de Agua PRO</strong> es una aplicación integrada desarrollada en VBA para Microsoft Excel que automatiza completamente el diseño de conducciones de agua potable, desde la extracción de datos topográficos hasta la generación de planos técnicos en AutoCAD.</p>
+<p><strong>Versión Actual</strong>: 4.8.4 (Abril 2026)<br><strong>Desarrollador</strong>: Ing. Patricio Sarmiento Reinoso<br><strong>Arquitectura</strong>: Multi-módulo VBA con conexión COM a AutoCAD</p>
+<h3>1.2 Capacidades Principales</h3>
+<table>
+<thead>
+<tr>
+<th>Módulo</th>
+<th>Funcionalidad</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Exportación</strong></td>
+<td>Extrae datos de perfiles desde AutoCAD Civil 3D</td>
+</tr>
+<tr>
+<td><strong>Cálculos</strong></td>
+<td>Ejecuta análisis hidráulico completo (Darcy-Weisbach, Hazen-Williams)</td>
+</tr>
+<tr>
+<td><strong>Dibujo Perfil</strong></td>
+<td>Genera perfil longitudinal con guitarra y símbolos ISO</td>
+</tr>
+<tr>
+<td><strong>Dibujo Planta</strong></td>
+<td>Dibuja planta con coordenadas UTM reales</td>
+</tr>
+<tr>
+<td><strong>Transitorios</strong></td>
+<td>Análisis de golpe de Ariete (Allievi, Mendiluce)</td>
+</tr>
+<tr>
+<td><strong>Exportación</strong></td>
+<td>Genera archivos .all para software Allievi</td>
+</tr>
+</tbody></table>
+<h3>1.3 Flujo de Trabajo Completo</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                           FLUJO INTEGRADO DE DATOS                                  │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  ┌─────────────────────┐     ┌──────────────────┐     ┌─────────────────────────┐ │
+│  │  AutoCAD Civil 3D  │────▶│      Excel       │────▶│       AutoCAD           │ │
+│  │                     │     │                  │     │                         │ │
+│  │ 1. Dibujar eje y   │     │ 2. Calcular      │     │ 3. Dibujar Perfil       │ │
+│  │    perfil vertical │     │    hidráulico    │     │    y Planta             │ │
+│  │                     │     │                  │     │                         │ │
+│  │ PERFIL_PRO (LISP)   │     │ DatosFormulas    │     │ DibujoTotalCAD2026_PRO  │ │
+│  └─────────────────────┘     └──────────────────┘     └─────────────────────────┘ │
+│         │                            │                               │             │
+│         │                            │                               │             │
+│         ▼                            ▼                               ▼             │
+│  ┌─────────────────────┐     ┌──────────────────┐     ┌─────────────────────────┐ │
+│  │ 1_procesar_perfil   │     │ Rutina_Calculos  │     │ Rutina_Dibujo_2026      │ │
+│  │       .py           │     │    _2026.vba     │     │    + LISP Batch         │ │
+│  └─────────────────────┘     └──────────────────┘     └─────────────────────────┘ │
+│                                                                                     │
+│                                    ▼                                               │
+│                          ┌──────────────────┐                                      │
+│                          │  Transitorios    │                                      │
+│                          │ Rutina_Transitorios │                                    │
+│                          │   (Golpe Ariete)  │                                      │
+│                          └──────────────────┘                                      │
+│                                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>1.4 Requisitos del Sistema</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Requisitos</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Excel</strong></td>
+<td>2010 o superior (formato .xlsm con macros)</td>
+</tr>
+<tr>
+<td><strong>AutoCAD</strong></td>
+<td>2010 o superior</td>
+</tr>
+<tr>
+<td><strong>Civil 3D</strong></td>
+<td>2010 o superior (para exportación)</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>3.x (para script de exportación)</td>
+</tr>
+<tr>
+<td><strong>Sistema Operativo</strong></td>
+<td>Windows 10/11</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. Exportación desde AutoCAD Civil 3D</h2>
+<p><em>(Ver documento detallado: <code>02_Exportacion_AutoCAD_Civil3D.md</code>)</em></p>
+<h3>2.1 Comando Principal: PERFIL_PRO</h3>
+<p>El comando <code>PERFIL_PRO</code> ejecuta la rutina LISP que:</p>
+<ol>
+<li>Solicita seleccionar el <strong>Alineamiento Horizontal</strong></li>
+<li>Solicita seleccionar el <strong>Perfil Vertical</strong></li>
+<li>Muestra diálogo de configuración</li>
+<li>Extrae datos y genera CSV temporal</li>
+<li>Ejecuta Python para formateo</li>
+<li>Inserta datos en Excel</li>
+</ol>
+<h3>2.2 Parámetros de Exportación</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Descripción</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Intervalo</td>
+<td>Distancia entre puntos</td>
+<td>10.0 m</td>
+</tr>
+<tr>
+<td>Profundidad</td>
+<td>Enterramiento de tubería</td>
+<td>0.80 m</td>
+</tr>
+<tr>
+<td>Incluir PHIs</td>
+<td>Puntos de inflexión horizontal</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Incluir PVIs</td>
+<td>Puntos de inflexión vertical</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>Incluir Extremos</td>
+<td>Inicio y fin del eje</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>3. Cálculos Hidráulicos en Excel</h2>
+<p><em>(Ver documento detallado: <code>03_Calculos_Hidraulicos_Excel.md</code>)</em></p>
+<h3>3.1 Estructura de la Hoja "calculo"</h3>
+<p>La hoja principal contiene la siguiente organización:</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────┐
+│  FILAS 1-16: CABECERA DE CONFIGURACIÓN                                 │
+│  ├── Créditos (A16): "CREDITOS: Ing. Patricio Sarmiento Reinoso"     │
+│  ├── Cota Piezométrica inicial (AY5)                                    │
+│  ├── Cota Terreno inicial (AY6)                                        │
+│  ├── Coeficiente Hazen-Williams (AF6)                                   │
+│  └── Presión mínima residual                                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│  FILA 17: TÍTULOS DE COLUMNAS                                           │
+│  H= Punto | I=Abscisa | J=Terreno | K=Pendiente | L=Longitud | ...     │
+├─────────────────────────────────────────────────────────────────────────┤
+│  FILAS 18+: DATOS DE CÁLCULO                                            │
+│  A partir de aquí se ejecutan todos los cálculos hidráulicos           │
+└─────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>3.2 Columnas Principales de Cálculo</h3>
+<table>
+<thead>
+<tr>
+<th>Letra</th>
+<th>Nombre</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H</td>
+<td>Punto</td>
+<td>Número correlativo</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Abscisa</td>
+<td>Distancia acumulada (m)</td>
+</tr>
+<tr>
+<td>J</td>
+<td>Terreno</td>
+<td>Cota del terreno natural (m)</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Proyecto</td>
+<td>Cota de la tubería (m)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Pendiente</td>
+<td>Pendiente del terreno (%)</td>
+</tr>
+<tr>
+<td>P</td>
+<td>Piezométrica</td>
+<td>Línea de carga (m)</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>Pend.Proy</td>
+<td>Pendiente piezométrica (%)</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Presión</td>
+<td>Presión disponible (mca)</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Caudal</td>
+<td>Caudal de diseño (l/s)</td>
+</tr>
+<tr>
+<td>T</td>
+<td>Velocidad</td>
+<td>Velocidad del flujo (m/s)</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Diám.Int</td>
+<td>Diámetro interior (mm)</td>
+</tr>
+<tr>
+<td>AL</td>
+<td>Accesorio</td>
+<td>TRP, VRP, PE</td>
+</tr>
+<tr>
+<td>AP</td>
+<td>Anotaciones</td>
+<td>VA, VP</td>
+</tr>
+</tbody></table>
+<h3>3.3 Motor de Cálculo: DatosFormulas</h3>
+<p>La macro principal <code>DatosFormulas</code> ejecuta en secuencia:</p>
+<ol>
+<li><strong>Limpieza</strong>: Borra zonas de cálculo anteriores</li>
+<li><strong>Validación</strong>: Verifica créditos en A16</li>
+<li><strong>Fórmulas base</strong>: Aplica cálculos de pendientes, presiones</li>
+<li><strong>Pérdidas</strong>: Calcula pérdida de carga Hazen-Williams</li>
+<li><strong>Válvulas</strong>: Detecta automáticamente VA y VP</li>
+<li><strong>Resúmenes</strong>: Genera tablas de accesorios y tramos</li>
+<li><strong>Formato</strong>: Aplica negrita y color a accesorios</li>
+</ol>
+<h3>3.4 Parámetros de Diseño</h3>
+<p>Los parámetros se configuran en la cabecera de la hoja:</p>
+<pre><code>┌────────────────────────────────────────┐
+│ Cota Piezométrica inicial: 500.000 m   │
+│ Cota Terreno inicial:     450.000 m    │
+│ Coeficiente C (H-W):      140          │
+│ Presión mínima residual:   10.0 mca    │
+└────────────────────────────────────────┘
+</code></pre>
+<h3>3.5 Funciones Hidráulicas VBA</h3>
+<table>
+<thead>
+<tr>
+<th>Función</th>
+<th>Fórmula</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>calculav(Q, di)</code></td>
+<td>V = Q/A</td>
+<td>Velocidad (m/s)</td>
+</tr>
+<tr>
+<td><code>PerdidaCarga(Q, L, C, D)</code></td>
+<td>Hazen-Williams</td>
+<td>Pérdida de carga (m)</td>
+</tr>
+<tr>
+<td><code>LongInc(c1, c2, DH)</code></td>
+<td>√((c1-c2)²+DH²)</td>
+<td>Longitud inclinada</td>
+</tr>
+<tr>
+<td><code>Interpolar(x1,y1,x2,y2,x)</code></td>
+<td>Lineal</td>
+<td>Interpolación</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>4. Dibujo en AutoCAD - Perfil Longitudinal</h2>
+<p><em>(Ver documento detallado: <code>04_Dibujo_AutoCAD.md</code>)</em></p>
+<h3>4.1 Sistema de Dibujo LISP Batch (v3.5.0)</h3>
+<p>El sistema utiliza un motor <strong>LISP Batch</strong> que genera archivos LISP temporales ejecutados directamente en AutoCAD, siendo significativamente más rápido que el método COM tradicional.</p>
+<p><strong>Arquitectura del Motor</strong>:</p>
+<pre><code>Excel VBA → Genera archivo .LSP → AutoCAD (load) → Ejecuta → Borra archivo
+</code></pre>
+<h3>4.2 Macro Principal: DibujoTotalCAD2026_PRO</h3>
+<p>Esta macro orquesta todo el proceso de dibujo:</p>
+<pre><code class="language-vba">Sub DibujoTotalCAD2026_PRO()
+    ' Secuencia:
+    ' 1. InicializarEntorno (conectar AutoCAD)
+    ' 2. BorrarTodoCAD (limpiar capas anteriores)
+    ' 3. DibujarGuitarrasTotales (grilla completa)
+    ' 4. DibujarTextosTotales (abscisas, cotas, títulos)
+    ' 5. DibujarPerfilesTotales (terreno, proyecto, piezo)
+    ' 6. DibujarSimbolosISO_Accesorios (símbolos + tabla)
+End Sub
+</code></pre>
+<h3>4.3 Escalas y Configuración</h3>
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripción</th>
+<th>Típico</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EscalaHor (Eh)</td>
+<td>Escala horizontal</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>EscalaVert (Ev)</td>
+<td>Escala vertical</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Datum</td>
+<td>Cota mínima - 10m</td>
+<td>Auto-calculado</td>
+</tr>
+</tbody></table>
+<h3>4.4 Sistema de Guitarra (Grilla)</h3>
+<p>El sistema genera 7 tipos de guitarra:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Guitarra</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Contorno</td>
+<td>Marco exterior</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Superior</td>
+<td>Grilla vertical interior</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Inferior</td>
+<td>Filas de datos</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Títulos</td>
+<td>Cuadros de títulos a la izquierda</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PIs</td>
+<td>Verticales de accesorios</td>
+</tr>
+<tr>
+<td>6</td>
+<td>DatosH</td>
+<td>Verticales de tabla</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Marcas</td>
+<td>Ticks laterales</td>
+</tr>
+</tbody></table>
+<h3>4.5 Símbolos ISO de Accesorios</h3>
+<table>
+<thead>
+<tr>
+<th>Símbolo</th>
+<th>Código</th>
+<th>Representación</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🔺</td>
+<td>VA</td>
+<td>Triángulo filled + círculo</td>
+</tr>
+<tr>
+<td>🔻</td>
+<td>VP</td>
+<td>Triángulo invertido + línea purga</td>
+</tr>
+<tr>
+<td>⬜</td>
+<td>VRP</td>
+<td>Dos triángulos (corbatín)</td>
+</tr>
+<tr>
+<td>▭</td>
+<td>TRP</td>
+<td>Rectángulo + línea nivel agua</td>
+</tr>
+<tr>
+<td>⌒</td>
+<td>PE</td>
+<td>Arco semicircular</td>
+</tr>
+</tbody></table>
+<h3>4.6 Capas AutoCAD Creadas</h3>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LPerfil</td>
+<td>Terreno natural</td>
+</tr>
+<tr>
+<td>LProyecto</td>
+<td>Línea de tubería</td>
+</tr>
+<tr>
+<td>LPiezometrica</td>
+<td>Línea de carga</td>
+</tr>
+<tr>
+<td>LGuitarra</td>
+<td>Grilla del perfil</td>
+</tr>
+<tr>
+<td>LAccesorios</td>
+<td>Símbolos VA, VP</td>
+</tr>
+<tr>
+<td>LValvulas</td>
+<td>VRP, TRP</td>
+</tr>
+<tr>
+<td>LTablaResumen</td>
+<td>Tabla de accesorios</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. Dibujo en AutoCAD - Planta</h2>
+<h3>5.1 Sistema de Coordenadas UTM</h3>
+<p>El módulo <strong>Rutina_dibujo_planta.vba</strong> dibuja la planta utilizando coordenadas UTM reales extraídas del perfil técnico.</p>
+<p><strong>Coordenadas utilizadas</strong>:</p>
+<ul>
+<li>Columna J (Excel): Este (X)</li>
+<li>Columna K (Excel): Norte (Y)</li>
+</ul>
+<h3>5.2 Parámetros de Configuración (Hoja DibujoAcad)</h3>
+<table>
+<thead>
+<tr>
+<th>Grupo</th>
+<th>Parámetros</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Puntos</strong></td>
+<td>PL_dibPuntos, PL_tipoPuntos, PL_tamPuntos</td>
+</tr>
+<tr>
+<td><strong>Círculos</strong></td>
+<td>PL_dibCirculos, PL_diamCirc, PL_colorCirc</td>
+</tr>
+<tr>
+<td><strong>Eje</strong></td>
+<td>PL_dibEje, PL_anchoL, PL_colorL</td>
+</tr>
+<tr>
+<td><strong>Ticks Abscisas</strong></td>
+<td>PL_thicksR, PL_thicksR_long</td>
+</tr>
+<tr>
+<td><strong>Ticks PIs</strong></td>
+<td>PL_thicksPI_marcas, PL_thicksPI_Long</td>
+</tr>
+<tr>
+<td><strong>Textos</strong></td>
+<td>PL_texR, PL_texPI, PL_texAC</td>
+</tr>
+<tr>
+<td><strong>Grilla UTM</strong></td>
+<td>PL_grilla, PL_grilla_paso</td>
+</tr>
+</tbody></table>
+<h3>5.3 Dibujo por Abscisas</h3>
+<p>El sistema genera marcas y textos en intervalos regulares:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Intervalo</th>
+<th>Detalle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Paso Mayor</td>
+<td>GPasoMayor</td>
+<td>Texto completo + tick largo</td>
+</tr>
+<tr>
+<td>Paso Menor</td>
+<td>GPasoHorizontal</td>
+<td>Solo tick</td>
+</tr>
+<tr>
+<td>PIs</td>
+<td>Puntos de inflexión</td>
+<td>Texto con coordenadas</td>
+</tr>
+</tbody></table>
+<h3>5.4 Grilla UTM Automática</h3>
+<p>Cuando <code>PL_grilla = "si"</code>:</p>
+<ul>
+<li>Genera marco rectangular</li>
+<li>Dibuja líneas cada PL_grilla_paso</li>
+<li>Etiqueta coordenadas E (Este) y N (Norte)</li>
+<li>Posicionamiento: interno o externo</li>
+</ul>
+<h3>5.5 Accesorios en Planta</h3>
+<p>Los símbolos de accesorios se dibujan interpolando la abscisa del accesorio en el eje:</p>
+<ul>
+<li><strong>VA</strong>: Círculo + línea vertical</li>
+<li><strong>VP</strong>: Triángulo invertido</li>
+<li><strong>TRP</strong>: Rectángulo</li>
+<li><strong>VRP</strong>: Dos triángulos enfrentados</li>
+<li><strong>PE</strong>: Cuadrilátero entre INI y FIN</li>
+</ul>
+<hr>
+<h2>6. Análisis de Transitorios (Golpe de Ariete)</h2>
+<h3>6.1 Módulo: Rutina_Transitorios.vba</h3>
+<p>Este módulo ejecuta el análisis de transitorios hidráulicos utilizando múltiples metodologías:</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Descripción</th>
+<th>Aplicación</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Allievi</strong></td>
+<td>Teoría clásica de golpe de ariete</td>
+<td>Análisis completo</td>
+</tr>
+<tr>
+<td><strong>Michaud</strong></td>
+<td>Estimación de sobrepresiones</td>
+<td>Método simplificado</td>
+</tr>
+<tr>
+<td><strong>Joukowski</strong></td>
+<td>Fórmula directa de presión</td>
+<td>Cálculo rápido</td>
+</tr>
+<tr>
+<td><strong>Mendiluce</strong></td>
+<td>Método español avanzado</td>
+<td>Análisis detallado</td>
+</tr>
+</tbody></table>
+<h3>6.2 Parámetros de Análisis</h3>
+<p>El sistema lee parámetros de la hoja <strong>Parametros_Transitorio</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Input_Tm</td>
+<td>Tiempo de cierre (s)</td>
+</tr>
+<tr>
+<td>Input_Q</td>
+<td>Caudal de diseño (l/s)</td>
+</tr>
+<tr>
+<td>Input_PN</td>
+<td>Presión nominal (bar)</td>
+</tr>
+<tr>
+<td>Input_Celeridad</td>
+<td>Celeridad de la onda (m/s)</td>
+</tr>
+<tr>
+<td>T_OpcionBomba</td>
+<td>Modo impulsión/gravedad</td>
+</tr>
+</tbody></table>
+<h3>6.3 Columnas de Resultados (CZ:EC)</h3>
+<p>El análisis genera las siguientes columnas:</p>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CZ</td>
+<td>Presión máxima (mca)</td>
+</tr>
+<tr>
+<td>DA</td>
+<td>Presión mínima (mca)</td>
+</tr>
+<tr>
+<td>DB</td>
+<td>Velocidad de la onda (m/s)</td>
+</tr>
+<tr>
+<td>DC</td>
+<td>Incremento de presión (mca)</td>
+</tr>
+</tbody></table>
+<h3>6.4 Ejecución</h3>
+<pre><code class="language-vba">Sub EjecutarAnalisisTransitorios()
+    ' Análisis completo de transitorios
+    ' Resultados en columnas CZ17:EC5000
+End Sub
+</code></pre>
+<hr>
+<h2>7. Exportación Allievi</h2>
+<h3>7.1 Módulo: Rutina_Allievi.vba</h3>
+<p>Este módulo genera archivos en formato <strong>.all</strong> compatible con el software Allievi para análisis de transitorios.</p>
+<h3>7.2 Proceso de Generación</h3>
+<ol>
+<li>Lee datos de la hoja <strong>Datos_Allievi</strong></li>
+<li>Carga plantilla binaria desde <strong>sys_TemplateAllievi</strong></li>
+<li>Realiza reemplazos binarios:<ul>
+<li>Título del proyecto</li>
+<li>Datos de tuberías (cotas, longitudes)</li>
+<li>Parámetros hidráulicos (D, rugosidad, celeridad)</li>
+<li>Curva característica de la bomba</li>
+</ul>
+</li>
+<li>Guarda archivo en la ruta especificada</li>
+</ol>
+<h3>7.3 Ejecución</h3>
+<pre><code class="language-vba">Sub GenerarAllievi_PRO()
+    ' Genera archivo .all en carpeta Descargas
+End Sub
+</code></pre>
+<h3>7.4 Estructura de Datos Requeridos</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D6</td>
+<td>Título del proyecto</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>Nombre del ingeniero</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>Nombre del archivo</td>
+</tr>
+<tr>
+<td>B22:C24</td>
+<td>Cotas de tuberías</td>
+</tr>
+<tr>
+<td>E22:E30</td>
+<td>Longitudes de tramos</td>
+</tr>
+<tr>
+<td>D22</td>
+<td>Diámetro interior</td>
+</tr>
+<tr>
+<td>G22</td>
+<td>Celeridad</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>8. Accesorios y Elementos Especiales</h2>
+<p><em>(Ver documento detallado: <code>05_Accesorios_Elementos_Especiales.md</code>)</em></p>
+<h3>8.1 Tipos de Accesorios</h3>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Nombre</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VA</td>
+<td>Válvula de Aire</td>
+<td>Expulsa aire en puntos altos</td>
+</tr>
+<tr>
+<td>VP</td>
+<td>Válvula de Purga</td>
+<td>Permite vaciado</td>
+</tr>
+<tr>
+<td>VRP</td>
+<td>Válvula Reductora</td>
+<td>Reduce presión</td>
+</tr>
+<tr>
+<td>TRP</td>
+<td>Tanque Rompe Presión</td>
+<td>Disipa energía</td>
+</tr>
+<tr>
+<td>PE</td>
+<td>Paso Elevado</td>
+<td>Cruza depresiones</td>
+</tr>
+</tbody></table>
+<h3>8.2 Insertar Accesorios</h3>
+<p><strong>Método 1: Macros VBA</strong></p>
+<pre><code class="language-vba">TanqueRompePresion()    ' Inserta TRP
+ValvulaReductoraPresion() ' Inserta VRP
+PasoElevado()           ' Marca PE-INI/PE-FIN
+</code></pre>
+<p><strong>Método 2: Manual</strong></p>
+<ul>
+<li>Escribir código en columna AL (TRP, VRP, PE)</li>
+<li>Escribir código en columna AP (VA, VP)</li>
+<li>Ejecutar DatosFormulas</li>
+</ul>
+<h3>8.3 Válvulas Automáticas</h3>
+<p>El sistema detecta automáticamente dónde colocar VA/VP según cambios de pendiente:</p>
+<ul>
+<li><strong>VA</strong>: Cambio de pendiente positivo (subida)</li>
+<li><strong>VP</strong>: Cambio de pendiente negativo (bajada)</li>
+</ul>
+<p>Parámetros de activación:</p>
+<ul>
+<li><strong>DesMinVA</strong>: Desnivel mínimo (típico 3.0 m)</li>
+<li><strong>DminVA</strong>: Distancia mínima (típico 100 m)</li>
+</ul>
+<h3>8.4 Pasos Elevados</h3>
+<p>El sistema utiliza pares INI/FIN:</p>
+<ol>
+<li>Ejecutar <code>PasoElevado</code> en punto inicio → "PE-1 INI"</li>
+<li>Ejecutar <code>PasoElevado</code> en punto fin → "PE-1 FIN"</li>
+<li>El sistema "aplana" la línea de proyecto entre ambos puntos</li>
+</ol>
+<hr>
+<h2>9. Configuración de Parámetros</h2>
+<h3>9.1 Hojas de Configuración</h3>
+<table>
+<thead>
+<tr>
+<th>Hoja</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>calculo</strong></td>
+<td>Parámetros hidráulicos y resultados</td>
+</tr>
+<tr>
+<td><strong>DibujoAcad</strong></td>
+<td>Configuración de dibujo</td>
+</tr>
+<tr>
+<td><strong>Tuberia PEAD</strong></td>
+<td>Catálogo de tuberías</td>
+</tr>
+<tr>
+<td><strong>Parametros_Transitorio</strong></td>
+<td>Parámetros de transitorios</td>
+</tr>
+<tr>
+<td><strong>Datos_Allievi</strong></td>
+<td>Datos para export .all</td>
+</tr>
+</tbody></table>
+<h3>9.2 Hoja DibujoAcad - Parámetros Principales</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────────┐
+│                        CONFIGURACIÓN DE DIBUJO                   │
+├──────────────────────────────────────────────────────────────────┤
+│ ESCALAS:                                                          │
+│   EscalaHor (Eh): 1000     EscalaVert (Ev): 100                   │
+│                                                                  │
+│ CAPAS:                                                            │
+│   NombreLayer: LPerfil    ColorLinea: 3                         │
+│   AnchoLinea1: 0.35                                            │
+│                                                                  │
+│ GUITARRA:                                                         │
+│   GPasoHorizontal: 20      GPasoVertical: 5                     │
+│   GFilas: 6                GAltoFilas: 8                         │
+│                                                                  │
+│ TEXTOS:                                                           │
+│   Taltotexto: 2.5          TEstiloTexto: Arial                   │
+│   Tcolorlinea: 7                                              │
+│                                                                  │
+│ PLANTA:                                                           │
+│   PL_dibEje: si          PL_grilla: si                          │
+│   PL_grilla_paso: 1000                                          │
+└──────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>9.3 Catálogo de Tuberías (Hoja Tuberia PEAD)</h3>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V</td>
+<td>Diámetro nominal (mm)</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Diámetro exterior (mm)</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>Espesor de pared (mm)</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>Presión nominal (PN)</td>
+</tr>
+<tr>
+<td>AA+</td>
+<td>Series (S5, S8, S10, S12.5, S16)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>10. Interfaces de Usuario (Dashboards)</h2>
+<h3>10.1 Dashboard de Dibujo (frmDibujo_2026)</h3>
+<p>Interfaz con pestañas para control de dibujo:</p>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│  SISTEMA INTEGRADO DE DIBUJO v4.6.2                    │
+├─────────────────────────────────────────────────────────┤
+│ [PERFIL] [PLANTA] [HERRAM]                             │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  DIBUJO TOTAL PERFIL                     [ verde ]    │
+│                                                         │
+│  DIBUJAR PERFILES           GUITARRAS TOTALES          │
+│  [azul]                     [azul]                    │
+│                                                         │
+│  TEXTOS Y ABSCISAS          ACCESORIOS (+TEXTOS)        │
+│  [naranja]                  [naranja]                  │
+│                                                         │
+│  PASOS ELEVADOS                                         │
+│  [azul]                                                │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>10.2 Dashboard Hidráulico (frmControl_CA)</h3>
+<p>Panel de control para operaciones de cálculo:</p>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│  SISTEMA DE CONDUCCIÓN - Dashboard Hidráulico PRO      │
+├─────────────────────────────────────────────────────────┤
+│ [OPERACIONES] [UTILIDADES] [AYUDA PRO]                 │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  DATOS/FÓRMULAS          PENDIENTE CÁLC.               │
+│  [azul]                   [azul]                        │
+│                                                         │
+│  + TRP   + VRP   PASO ELEVADO                          │
+│  [gris] [gris] [gris]                                  │
+│                                                         │
+│  ELIMINAR ACCESORIO      LISP PASOS ELEV.              │
+│  [rojo]                  [verde]                       │
+│                                                         │
+│  A PERFIL (HOJA)                                      │
+│  [azul]                                               │
+│                                                         │
+│  RESUMEN TOTAL                                          │
+│  [verde]                                               │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+<h3>10.3 Módulo Lanzador (ModLanzador_Dashboard)</h3>
+<pre><code class="language-vba">AbrirDashboardDibujo()     ' Abre frmDibujo_2026
+AbrirDashboardPerfiles()   ' Abre frmControl_CA
+AutoCAD_ZoomE()            ' Zoom Extents en AutoCAD
+AutoCAD_Limpiar()          ' Instrucciones de limpieza
+</code></pre>
+<h3>10.4 Módulo Bridge (ModBridge_Dashboard)</h3>
+<p>Capa de validación y ejecución anti-error:</p>
+<pre><code class="language-vba">Bridge_Perfil_Total()      ' DibujoTotalCAD2026_PRO
+Bridge_Planta_Total()      ' DibujarPlantaEje
+Bridge_Perfil_SoloAccesorios() ' Solo símbolos
+</code></pre>
+<hr>
+<h2>11. Catálogo de Macros y Funciones</h2>
+<p><em>(Ver documento detallado: <code>06_Catalogo_Macros_Funciones.md</code>)</em></p>
+<h3>11.1 Resumen de Módulos VBA</h3>
+<table>
+<thead>
+<tr>
+<th>Módulo</th>
+<th>Función Principal</th>
+<th>Versión</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Rutina_Calculos_2026.vba</td>
+<td>Cálculos hidráulicos</td>
+<td>4.0.1</td>
+</tr>
+<tr>
+<td>Rutina_Dibujo_2026.vba</td>
+<td>Dibujo perfil longitudinal</td>
+<td>3.5.0</td>
+</tr>
+<tr>
+<td>Rutina_dibujo_planta.vba</td>
+<td>Dibujo en planta</td>
+<td>4.8.4</td>
+</tr>
+<tr>
+<td>Rutina_Transitorios.vba</td>
+<td>Análisis transitorios</td>
+<td>8.8.3</td>
+</tr>
+<tr>
+<td>Rutina_Allievi.vba</td>
+<td>Exportación Allievi</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td>frmDibujo_2026.vba</td>
+<td>Dashboard dibujo</td>
+<td>4.6.2</td>
+</tr>
+<tr>
+<td>frmControl_CA.vba</td>
+<td>Dashboard hidráulico</td>
+<td>4.7.0</td>
+</tr>
+<tr>
+<td>ModLanzador_Dashboard.vba</td>
+<td>Lanzador principal</td>
+<td>4.7.0</td>
+</tr>
+<tr>
+<td>ModBridge_Dashboard.vba</td>
+<td>Capa validación</td>
+<td>4.6.0</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>12. Módulos Futuros Propuestos</h2>
+<h3>12.1 Módulos Sugeridos para Desarrollo Futuro</h3>
+<h4>A. Módulo de Dimensionamiento Automático</h4>
+<p><strong>Objetivo</strong>: Calcular automáticamente el diámetro óptimo según caudal y presión.</p>
+<pre><code>Propuesta de funciones:
+- DimensionarDiametro(Q, Longitud, PresionMin)
+- OptimizarCosto(DiametrosDisponibles, Longitud)
+- VerificarVelocidad(Q, D)
+</code></pre>
+<h4>B. Módulo de Costos</h4>
+<p><strong>Objetivo</strong>: Estimar costos de la conducción.</p>
+<pre><code>Propuesta de funciones:
+- CalcularMateriales(Longitud, Diametro)
+- EstimarExcavacion(Profundidad, Longitud)
+- GenerarPresupuesto()
+</code></pre>
+<h4>C. Módulo de Exportación a PDF</h4>
+<p><strong>Objetivo</strong>: Generar planos en PDF directamente desde Excel.</p>
+<pre><code>Propuesta de funciones:
+- ExportarPerfilPDF()
+- ExportarPlantaPDF()
+- GenerarPlanoDetalle(Accesorio)
+</code></pre>
+<h4>D. Módulo de Informes Automáticos</h4>
+<p><strong>Objetivo</strong>: Generar informes técnicos en Word.</p>
+<pre><code>Propuesta de funciones:
+- GenerarInformeTecnico()
+- ExportarResumenEjecutivo()
+- CrearMemoriaDescriptiva()
+</code></pre>
+<h4>E. Módulo de Validación de Diseño</h4>
+<p><strong>Objetivo</strong>: Verificar cumplimiento de normativas.</p>
+<pre><code>Propuesta de funciones:
+- VerificarPresionesMinimas()
+- VerificarVelocidades()
+- ValidarNormativa(Norma)
+</code></pre>
+<h4>F. Módulo de Análisis de Sensibilidad</h4>
+<p><strong>Objetivo</strong>: Evaluar variaciones en el diseño.</p>
+<pre><code>Propuesta de funciones:
+- AnalizarVariacionCaudal(Porcentaje)
+- AnalizarVariacionDiametro()
+- GenerarGraficoSensibilidad()
+</code></pre>
+<h4>G. Módulo de Gestión de Múltiples Escenarios</h4>
+<p><strong>Objetivo</strong>: Comparar diferentes alternativas de diseño.</p>
+<pre><code>Propuesta de funciones:
+- GuardarEscenario(Nombre)
+- CargarEscenario(Nombre)
+- CompararEscenarios()
+</code></pre>
+<h4>H. Módulo de Integración con GIS</h4>
+<p><strong>Objetivo</strong>: Exportar a formatos GIS.</p>
+<pre><code>Propuesta de funciones:
+- ExportarShapefile()
+- ExportarKML()
+- ExportarGeoJSON()
+</code></pre>
+<h4>I. Módulo de Base de Datos de Tuberías</h4>
+<p><strong>Objetivo</strong>: Gestionar catálogo de materiales.</p>
+<pre><code>Propuesta de funciones:
+- AgregarTubo(Especificacion)
+- BuscarTubo(PN, DN)
+- ActualizarPrecios()
+</code></pre>
+<h4>J. Módulo de Mantenimiento y Rehabilitación</h4>
+<p><strong>Objetivo</strong>: Planificar mantenimiento de la conducción.</p>
+<pre><code>Propuesta de funciones:
+- IdentificarPuntosMantenimiento()
+- GenerarPlanInspeccion()
+- CalcularVidaUtil()
+</code></pre>
+<h3>12.2 Tabla Comparativa de Módulos Actuales vs. Propuestos</h3>
+<table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Módulo Actual</th>
+<th>Propuesto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cálculos</strong></td>
+<td>Rutina_Calculos_2026</td>
+<td>Dimensionamiento Automático</td>
+</tr>
+<tr>
+<td><strong>Cálculos</strong></td>
+<td>Rutina_Transitorios</td>
+<td>Validación de Diseño</td>
+</tr>
+<tr>
+<td><strong>Dibujo</strong></td>
+<td>Rutina_Dibujo_2026</td>
+<td>Exportación PDF</td>
+</tr>
+<tr>
+<td><strong>Dibujo</strong></td>
+<td>Rutina_dibujo_planta</td>
+<td>Integración GIS</td>
+</tr>
+<tr>
+<td><strong>Exportación</strong></td>
+<td>Rutina_Allievi</td>
+<td>Múltiples formatos</td>
+</tr>
+<tr>
+<td><strong>Informes</strong></td>
+<td>(No existe)</td>
+<td>Informes Automáticos</td>
+</tr>
+<tr>
+<td><strong>Gestión</strong></td>
+<td>(No existe)</td>
+<td>Múltiples Escenarios</td>
+</tr>
+<tr>
+<td><strong>Costos</strong></td>
+<td>(No existe)</td>
+<td>Módulo de Costos</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Anexo: Referencias de Archivos</h2>
+<h3>Estructura de Archivos del Proyecto</h3>
+<pre><code>3.exportar excel-acad macros/
+├── script vba/
+│   ├── Rutina_Calculos_2026.vba      (Cálculos hidráulicos)
+│   ├── Rutina_Dibujo_2026.vba        (Dibujo perfil)
+│   ├── Rutina_dibujo_planta.vba      (Dibujo planta)
+│   ├── Rutina_Transitorios.vba        (Golpe de ariete)
+│   ├── Rutina_Allievi.vba            (Export .all)
+│   ├── frmDibujo_2026.vba            (Dashboard dibujo)
+│   ├── frmControl_CA.vba             (Dashboard cálculo)
+│   ├── ModLanzador_Dashboard.vba     (Lanzador)
+│   ├── ModBridge_Dashboard.vba       (Puente validación)
+│   ├── clsBoton.vba                  (Eventos botones)
+│   └── (otros módulos)
+│
+├── Manual de Usuario/
+│   ├── 01_Introduccion_Flujo_de_Trabajo.md
+│   ├── 02_Exportacion_AutoCAD_Civil3D.md
+│   ├── 03_Calculos_Hidraulicos_Excel.md
+│   ├── 04_Dibujo_AutoCAD.md
+│   ├── 05_Accesorios_Elementos_Especiales.md
+│   └── 06_Catalogo_Macros_Funciones.md
+│
+└── (Archivos LISP y Python de exportación)
+</code></pre>
+<hr>
+<h2>Soporte Técnico</h2>
+<p><strong>Desarrollado por</strong>: Ing. Patricio Sarmiento Reinoso<br><strong>Versión</strong>: 2026 PRO<br><strong>Contacto</strong>: [Incluir información de contacto]<br><strong>Última Actualización</strong>: Abril 2026</p>
+<hr>
+<p><em>Documento generado automáticamente. Sistema de Conducciones de Agua PRO - Todos los derechos reservados.</em></p>
+</div>
+                </div>
+            </main>
+    <script>
+        function showTab(idx) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            const btn = document.getElementById('tab-'+idx);
+            const content = document.getElementById('content-'+idx);
+            if(btn && content) { btn.classList.add('active-tab'); content.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        }
+        function copyToClipboard(idx) {
+            const content = document.getElementById('content-'+idx);
+            const body = content.querySelector('.content-body');
+            const range = document.createRange();
+            range.selectNode(body);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                const btn = content.querySelector('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> ¡Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.innerHTML = originalText; btn.classList.remove('copied'); }, 2000);
+            } catch (err) {
+                alert('Error al copiar. Usa Ctrl+C manualmente.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            showTab(0);
+            if (window.MathJax && window.MathJax.typesetPromise) MathJax.typesetPromise().catch(err => console.log('MathJax error:', err));
+        });
+    </script>
+</body>
+</html>
